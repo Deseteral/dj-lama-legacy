@@ -1,5 +1,3 @@
+import * as Discord from './discord-bot';
 
-window.exit = function() {
-  // Close hihat
-  window.close();
-};
+Discord.initialize();
