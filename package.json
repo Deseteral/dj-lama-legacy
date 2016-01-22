@@ -1,0 +1,17 @@
+{
+  "name": "dj-lama",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "hihat src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Deseteral <github.com/deseteral>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^5.3.2",
+    "express": "^4.13.4",
+    "hihat": "^2.6.4"
+  }
+}

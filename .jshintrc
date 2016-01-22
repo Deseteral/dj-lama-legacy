@@ -1,0 +1,12 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "esnext": true,
+  "undef": true,
+  "unused": true,
+  "node": true,
+  "browser": true,
+  "plusplus": false,
+  "globals": { }
+}
