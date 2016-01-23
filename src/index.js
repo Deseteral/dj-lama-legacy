@@ -36,3 +36,7 @@ bot.events.on('play', (info) => {
 bot.events.on('song', () => {
   io.emit('song');
 });
+
+bot.events.on('skip', () => {
+  io.emit('skip');
+});

@@ -51,6 +51,15 @@ socket.on('song', () => {
   }
 });
 
+socket.on('skip', () => {
+  if (queue.length === 1) {
+    player.stopVideo();
+    queue.shift();
+  }
+
+  controller.next();
+});
+
 function timeToSeconds(time) {
   if (time === undefined) {
     return undefined;
