@@ -4,6 +4,7 @@ const express = require('express');
 const socket = require('socket.io');
 
 import * as bot from './discord-bot';
+import * as database from './database';
 
 const HTTP_PORT = 8000;
 
@@ -27,9 +28,10 @@ io.on('connection', (socket) => {
 });
 
 // Discord bot initialization
+database.load();
 bot.initialize();
 
-bot.events.on('play', (info) => {
+bot.events.on('yt', (info) => {
   io.emit('play', info);
 });
 
@@ -39,4 +41,16 @@ bot.events.on('song', () => {
 
 bot.events.on('skip', () => {
   io.emit('skip');
+});
+
+bot.events.on('add', (info) => {
+  database.add(info);
+});
+
+bot.events.on('play', (title) => {
+  let info = database.getByTitle(title);
+
+  if (info !== null) {
+    io.emit('play', info);
+  }
 });

@@ -10,12 +10,15 @@ export var events = null;
 
 var channel = null;
 
-var helpContent = `Parametry podane w \`<>\` są obowiązkowe, \`*takie*\` są opcjonalne.
+var helpContent = `Bot reaguje na komendy tylko na kanale #${CHANNEL_NAME}.
+Parametry podane w \`<>\` są obowiązkowe, \`*takie*\` są opcjonalne.
 Czas podawać w formacie mm:ss, np. 1:30, 12:00 itd.
 Dostępne są podane komendy:\n
-    \`play <id> *start* *end*\` - dodaje utwór z podanym \`id\` do kolejki odtwarzania, rozpoczynając odtwarzanie od czasu \`start\` do \`end\`.
+    \`yt <id> *start* *end*\` - dodaje utwór z podanym \`id\` do kolejki odtwarzania, rozpoczynając odtwarzanie od czasu \`start\` do \`end\`.
     \`song\` - wysyła link do aktualnie odtwarzanego utworu.
-    \`skip\` - pomija aktualnie odtwarzany utwór.`;
+    \`skip\` - pomija aktualnie odtwarzany utwór.
+    \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
+    \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.`;
 
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
@@ -50,8 +53,12 @@ function handleArgs(args) {
       sendMessage(helpContent);
       break;
 
-    case 'play':
-      events.emit('play', { id: args[1], start: args[2], end: args[3] });
+    case 'yt':
+      events.emit('yt', {
+        id: args[1].trim(),
+        start: typeof args[2] !== 'undefined' ? args[2].trim() : undefined,
+        end: typeof args[3] !== 'undefined' ? args[3].trim() : undefined
+      });
       break;
 
     case 'song':
@@ -60,6 +67,28 @@ function handleArgs(args) {
 
     case 'skip':
       events.emit('skip');
+      break;
+
+    case 'add':
+      args.shift();
+      args = args.join(' ').split('|');
+
+      let info = {
+        id: args[0].trim(),
+        artist: args[1].toLowerCase().trim(),
+        title: args[2].toLowerCase().trim(),
+        start: typeof args[3] !== 'undefined' ? args[3].trim() : undefined,
+        end: typeof args[4] !== 'undefined' ? args[4].trim() : undefined,
+      };
+
+      events.emit('add', info);
+      break;
+
+    case 'play':
+      args.shift();
+      args = args.join(' ').toLowerCase().trim();
+
+      events.emit('play', args);
       break;
   }
 }
