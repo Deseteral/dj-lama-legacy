@@ -20,8 +20,8 @@ export function initialize() {
 
   client.on('message', (message) => {
     if (message.channel.name === CHANNEL_NAME) {
-      let args = message.content.toLowerCase().split(' ');
-      if (args[0] === '!dj') {
+      let args = message.content.split(' ');
+      if (args[0].toLowerCase() === '!dj') {
         args.shift();
         handleArgs(args);
       }
@@ -30,10 +30,9 @@ export function initialize() {
 }
 
 function handleArgs(args) {
-
   // TODO: Add checking whether args exist
   // TODO: Add documentation
-  switch (args[0]) {
+  switch (args[0].toLowerCase()) {
     case 'play':
       events.emit('play', { id: args[1] });
       break;
