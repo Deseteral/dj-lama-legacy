@@ -10,6 +10,10 @@ export var events = null;
 
 var channel = null;
 
+var helpContent = `Dostępne są podane komendy:\n
+\`play <id>\` - dodaje utwór z podanym id do kolejki odtwarzania
+\`song\` - wysyła link do aktualnie odtwarzanego utworu`;
+
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 
@@ -39,6 +43,10 @@ function handleArgs(args) {
   // TODO: Add checking whether args exist
   // TODO: Add documentation
   switch (args[0].toLowerCase()) {
+    case 'help':
+      sendMessage(helpContent);
+      break;
+
     case 'play':
       events.emit('play', { id: args[1] });
       break;
