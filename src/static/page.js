@@ -22,6 +22,35 @@ var controller = {
   }
 }
 
+function say(message) {
+  const tweenTime = 1;
+  let volume = { vol: player.getVolume() };
+
+  TweenLite.to(volume, tweenTime, { vol: 10,
+    onUpdate: () => {
+      player.setVolume(volume.vol);
+    },
+
+    onComplete: () => {
+      let msg = new SpeechSynthesisUtterance();
+
+      msg.text = message;
+      msg.voice = window.speechSynthesis.getVoices()[13];
+      msg.lang = 'pl-PL';
+
+      msg.onend = () => {
+        TweenLite.to(volume, tweenTime, { vol: 100,
+          onUpdate: () => {
+            player.setVolume(volume.vol);
+          }
+        });
+      };
+
+      window.speechSynthesis.speak(msg);
+    }
+  });
+}
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '390',
@@ -38,9 +67,24 @@ function ytStateChange(e) {
   }
 }
 
+function timeToSeconds(time) {
+  if (time === undefined) {
+    return undefined;
+  }
+
+  time = time.split(':');
+  return parseInt(time[0]) * 60 + parseInt(time[1]);
+}
+
 socket.on('play', (info) => {
   queue.push(info);
+
   if (queue.length === 1) {
+    controller.load(queue[0]);
+  }
+
+  if (queue.length === 2 && player.getPlayerState() === YT.PlayerState.ENDED) {
+    queue.shift();
     controller.load(queue[0]);
   }
 });
@@ -59,12 +103,3 @@ socket.on('skip', () => {
 
   controller.next();
 });
-
-function timeToSeconds(time) {
-  if (time === undefined) {
-    return undefined;
-  }
-
-  time = time.split(':');
-  return parseInt(time[0]) * 60 + parseInt(time[1]);
-}
