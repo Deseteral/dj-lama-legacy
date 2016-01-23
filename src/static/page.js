@@ -6,8 +6,8 @@ var controller = {
   load: (info) => {
     player.loadVideoById({
       'videoId': info.id,
-      'startSeconds': info.start,
-      'endSeconds': info.end,
+      'startSeconds': timeToSeconds(info.start),
+      'endSeconds': timeToSeconds(info.end),
       // 'suggestedQuality': 'large'
     });
   },
@@ -50,3 +50,12 @@ socket.on('song', () => {
     socket.emit('current-song', queue[0].id);
   }
 });
+
+function timeToSeconds(time) {
+  if (time === undefined) {
+    return undefined;
+  }
+
+  time = time.split(':');
+  return parseInt(time[0]) * 60 + parseInt(time[1]);
+}

@@ -10,9 +10,11 @@ export var events = null;
 
 var channel = null;
 
-var helpContent = `Dostępne są podane komendy:\n
-\`play <id>\` - dodaje utwór z podanym id do kolejki odtwarzania
-\`song\` - wysyła link do aktualnie odtwarzanego utworu`;
+var helpContent = `Parametry podane w \`<>\` są obowiązkowe, \`*takie*\` są opcjonalne.
+Czas podawać w formacie mm:ss, np. 1:30, 12:00 itd.
+Dostępne są podane komendy:\n
+  \`play <id> *start* *end*\` - dodaje utwór z podanym \`id\` do kolejki odtwarzania, rozpoczynając odtwarzanie od czasu \`start\` do \`end\`.\n
+  \`song\` - wysyła link do aktualnie odtwarzanego utworu`;
 
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
@@ -48,7 +50,7 @@ function handleArgs(args) {
       break;
 
     case 'play':
-      events.emit('play', { id: args[1] });
+      events.emit('play', { id: args[1], start: args[2], end: args[3] });
       break;
 
     case 'song':
