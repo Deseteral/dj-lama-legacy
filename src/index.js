@@ -20,10 +20,19 @@ server.listen(HTTP_PORT, () => {
 // socket.io initialization
 io.on('connection', (socket) => {
   console.log('New socket connection');
+
+  socket.on('current-song', (id) => {
+    bot.sendMessage(`https://www.youtube.com/watch?v=${id}`);
+  })
 });
 
 // Discord bot initialization
 bot.initialize();
+
 bot.events.on('play', (info) => {
   io.emit('play', info);
+});
+
+bot.events.on('song', () => {
+  io.emit('song');
 });

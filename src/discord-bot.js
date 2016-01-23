@@ -8,6 +8,8 @@ export const CHANNEL_NAME = 'lama-fm';
 export var client = null;
 export var events = null;
 
+var channel = null;
+
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 
@@ -20,6 +22,10 @@ export function initialize() {
 
   client.on('message', (message) => {
     if (message.channel.name === CHANNEL_NAME) {
+      if (channel === null) {
+        channel = message.channel;
+      }
+
       let args = message.content.split(' ');
       if (args[0].toLowerCase() === '!dj') {
         args.shift();
@@ -36,5 +42,13 @@ function handleArgs(args) {
     case 'play':
       events.emit('play', { id: args[1] });
       break;
+
+    case 'song':
+      events.emit('song');
+      break;
   }
+}
+
+export function sendMessage(msg) {
+  client.sendMessage(channel, msg);
 }

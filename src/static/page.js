@@ -44,3 +44,9 @@ socket.on('play', (info) => {
     controller.load(queue[0]);
   }
 });
+
+socket.on('song', () => {
+  if (queue[0]) {
+    socket.emit('current-song', queue[0].id);
+  }
+});
