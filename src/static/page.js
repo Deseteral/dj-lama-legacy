@@ -1,18 +1,46 @@
 var socket = io();
 var player;
+var queue = [];
+
+var controller = {
+  load: (info) => {
+    player.loadVideoById({
+      'videoId': info.id,
+      'startSeconds': info.start,
+      'endSeconds': info.end,
+      // 'suggestedQuality': 'large'
+    });
+  },
+
+  next: () => {
+    if (queue.length <= 1) {
+      return;
+    }
+
+    queue.shift();
+    controller.load(queue[0]);
+  }
+}
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '390',
-    width: '640'
+    width: '640',
+    events: {
+      onStateChange: ytStateChange
+    }
   });
 }
 
+function ytStateChange(e) {
+  if (e.data === YT.PlayerState.ENDED) {
+    controller.next();
+  }
+}
+
 socket.on('play', (info) => {
-  player.loadVideoById({
-    'videoId': info.id,
-    // 'startSeconds': 0,
-    // 'endSeconds': 60,
-    // 'suggestedQuality': 'large'
-  });
+  queue.push(info);
+  if (queue.length === 1) {
+    controller.load(queue[0]);
+  }
 });
