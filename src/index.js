@@ -1,3 +1,6 @@
-import * as Discord from './discord-bot';
+import * as bot from './discord-bot';
 
-Discord.initialize();
+bot.initialize();
+bot.events.on('play', (info) => {
+  console.log(info);
+});
