@@ -23,31 +23,44 @@ var controller = {
 
 function say(message) {
   const tweenTime = 1;
-  let volume = { vol: player.getVolume() };
+  let volume = { level: player.getVolume() };
 
-  TweenLite.to(volume, tweenTime, { vol: 10,
+  TweenLite.to(volume, tweenTime, {
+    level: 10,
+
     onUpdate: () => {
-      player.setVolume(volume.vol);
+      player.setVolume(volume.level);
     },
 
     onComplete: () => {
-      let msg = new SpeechSynthesisUtterance();
-
-      msg.text = message;
-      msg.voice = window.speechSynthesis.getVoices()[13];
-      msg.lang = 'pl-PL';
-
-      msg.onend = () => {
-        TweenLite.to(volume, tweenTime, { vol: 100,
+      _speechApiSay(message, () => {
+        TweenLite.to(volume, tweenTime, {
+          level: 100,
           onUpdate: () => {
-            player.setVolume(volume.vol);
+            player.setVolume(volume.level);
           }
         });
-      };
-
-      window.speechSynthesis.speak(msg);
+        console.log('done!');
+      });
     }
   });
+}
+
+function _speechApiSay(message, callback) {
+  let msg = new SpeechSynthesisUtterance();
+
+  msg.text = message;
+  msg.voice = window.speechSynthesis.getVoices()[13];
+  msg.lang = 'pl-PL';
+
+  msg.onend = () => {
+    console.log('cb done!');
+    if (callback) {
+      callback();
+    }
+  };
+
+  window.speechSynthesis.speak(msg);
 }
 
 function onYouTubeIframeAPIReady() {
