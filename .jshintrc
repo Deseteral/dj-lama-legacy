@@ -8,5 +8,10 @@
   "node": true,
   "browser": true,
   "plusplus": false,
-  "globals": { }
+  "globals": {
+    "TweenLite": true,
+    "SpeechSynthesisUtterance": true,
+    "YT": true,
+    "io": true
+  }
 }

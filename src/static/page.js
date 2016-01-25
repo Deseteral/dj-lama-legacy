@@ -5,10 +5,9 @@ var queue = [];
 var controller = {
   load: (info) => {
     player.loadVideoById({
-      'videoId': info.id,
-      'startSeconds': timeToSeconds(info.start),
-      'endSeconds': timeToSeconds(info.end),
-      // 'suggestedQuality': 'large'
+      videoId: info.id,
+      startSeconds: timeToSeconds(info.start),
+      endSeconds: timeToSeconds(info.end)
     });
   },
 
@@ -20,7 +19,7 @@ var controller = {
     queue.shift();
     controller.load(queue[0]);
   }
-}
+};
 
 function say(message) {
   const tweenTime = 1;
