@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
 
   socket.on('current-song', (id) => {
     bot.sendMessage(`https://www.youtube.com/watch?v=${id}`);
-  })
+  });
 });
 
 // Discord bot initialization
@@ -53,4 +53,8 @@ bot.events.on('play', (title) => {
   if (info !== null) {
     io.emit('play', info);
   }
+});
+
+bot.events.on('say', (what) => {
+  io.emit('say', what);
 });

@@ -18,7 +18,8 @@ Dostępne są podane komendy:\n
     \`song\` - wysyła link do aktualnie odtwarzanego utworu.
     \`skip\` - pomija aktualnie odtwarzany utwór.
     \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
-    \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.`;
+    \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.
+    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:`;
 
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
@@ -89,6 +90,13 @@ function handleArgs(args) {
       args = args.join(' ').toLowerCase().trim();
 
       events.emit('play', args);
+      break;
+
+    case 'say':
+      args.shift();
+      args = args.join(' ');
+
+      events.emit('say', args);
       break;
   }
 }

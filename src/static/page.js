@@ -103,3 +103,7 @@ socket.on('skip', () => {
 
   controller.next();
 });
+
+socket.on('say', (what) => {
+  say(what);
+});
