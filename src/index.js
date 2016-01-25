@@ -58,3 +58,14 @@ bot.events.on('play', (title) => {
 bot.events.on('say', (what) => {
   io.emit('say', what);
 });
+
+bot.events.on('list', () => {
+  let songList = '';
+
+  for (let i = 0; i < database.library.length; i++) {
+    let song = database.library[i];
+    songList += `\`${song.artist} - ${song.title}\`\n`;
+  }
+
+  bot.sendMessage(songList);
+});

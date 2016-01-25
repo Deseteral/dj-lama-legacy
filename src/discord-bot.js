@@ -19,7 +19,8 @@ Dostępne są podane komendy:\n
     \`skip\` - pomija aktualnie odtwarzany utwór.
     \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
     \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.
-    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:`;
+    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:
+    \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy)`;
 
 export function initialize() {
   let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
@@ -97,6 +98,10 @@ function handleArgs(args) {
       args = args.join(' ');
 
       events.emit('say', args);
+      break;
+
+    case 'list':
+      events.emit('list');
       break;
   }
 }

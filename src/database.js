@@ -18,6 +18,7 @@ export function load() {
 
 export function add(info) {
   library.push(info);
+  sort();
   save();
 }
 
@@ -29,4 +30,18 @@ export function getByTitle(title) {
   }
 
   return null;
+}
+
+function sort() {
+  library.sort((a, b) => {
+    if (a.artist < b.artist) {
+      return -1;
+    }
+
+    if (a.artist > b.artist) {
+      return 1;
+    }
+
+    return 0;
+  });
 }
