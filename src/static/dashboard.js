@@ -2,6 +2,12 @@ var socket = io();
 var player;
 var queue = [];
 
+var $checkboxBlockQueue;
+
+document.addEventListener('DOMContentLoaded', () => {
+  $checkboxBlockQueue = document.querySelector('#checkbox-block-queue');
+});
+
 var controller = {
   load: (info) => {
     player.loadVideoById({
@@ -89,6 +95,10 @@ function timeToSeconds(time) {
 }
 
 socket.on('play', (info) => {
+  if ($checkboxBlockQueue.checked) {
+    return;
+  }
+
   queue.push(info);
 
   if (queue.length === 1) {
