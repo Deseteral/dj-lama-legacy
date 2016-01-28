@@ -50,12 +50,21 @@ export function initialize() {
 function handleArgs(args) {
   // TODO: Add checking whether args exist
   // TODO: Add documentation
+
+  if (args[0] === undefined) {
+    return;
+  }
+
   switch (args[0].toLowerCase()) {
     case 'help':
       sendMessage(helpContent);
       break;
 
     case 'yt':
+      if (args[1] === undefined) {
+        return;
+      }
+
       events.emit('yt', {
         id: args[1].trim(),
         start: typeof args[2] !== 'undefined' ? args[2].trim() : undefined,
@@ -75,6 +84,10 @@ function handleArgs(args) {
       args.shift();
       args = args.join(' ').split('|');
 
+      if (args.length < 3) {
+        return;
+      }
+
       let info = {
         id: args[0].trim(),
         artist: args[1].toLowerCase().trim(),
@@ -88,13 +101,20 @@ function handleArgs(args) {
 
     case 'play':
       args.shift();
-      args = args.join(' ').toLowerCase().trim();
+      if (args.length === 0) {
+        return;
+      }
 
+      args = args.join(' ').toLowerCase().trim();
       events.emit('play', args);
       break;
 
     case 'say':
       args.shift();
+      if (args.length === 0) {
+        return;
+      }
+
       args = args.join(' ');
 
       events.emit('say', args);
