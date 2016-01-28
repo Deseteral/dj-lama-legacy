@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <title>LamaFM radio</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="page.js"></script>
+</head>
+
+<body>
+  <h1>LamaFM radio</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">YouTube</div>
+        <div class="panel-body">
+          <div class="input-group">
+            <input
+              id="input-yt-id"
+              type="text"
+              class="form-control"
+              placeholder="YouTube ID">
+            <span class="input-group-btn">
+              <button
+                id="button-yt-play"
+                class="btn btn-default"
+                type="button">
+                Play
+              </button>
+            </span>
+          </div>
+
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon">Start</span>
+            <input
+              id="input-yt-start"
+              type="text"
+              class="form-control"
+              aria-describedby="sizing-addon3">
+          </div>
+
+          <div class="input-group input-group-sm">
+            <span class="input-group-addon">Koniec</span>
+            <input
+              id="input-yt-end"
+              type="text"
+              class="form-control"
+              aria-describedby="sizing-addon3">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h2>Test</h2>
+    </div>
+  </div>
+</body>
+</html>

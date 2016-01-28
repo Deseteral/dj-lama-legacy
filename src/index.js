@@ -25,6 +25,11 @@ io.on('connection', (socket) => {
   socket.on('current-song', (id) => {
     bot.sendMessage(`https://www.youtube.com/watch?v=${id}`);
   });
+
+  // Client socket
+  socket.on('client-yt', (info) => {
+    io.emit('play', info);
+  });
 });
 
 // Discord bot initialization
