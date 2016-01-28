@@ -3,17 +3,17 @@ const path = require('path');
 
 export var library = [];
 
+const DATABASE_PATH = path.join(__dirname, 'data/database.json');
+
 export function save() {
   fs.writeFileSync(
-    path.join(__dirname, 'database.json'),
-    JSON.stringify(library)
+    DATABASE_PATH,
+    JSON.stringify(library, null, 2)
   );
 }
 
 export function load() {
-  library = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'database.json'))
-  );
+  library = JSON.parse(fs.readFileSync(DATABASE_PATH));
 }
 
 export function add(info) {

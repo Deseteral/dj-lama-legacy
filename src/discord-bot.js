@@ -23,7 +23,9 @@ Dostępne są podane komendy:\n
     \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy)`;
 
 export function initialize() {
-  let config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
+  let config = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'data/config.json'))
+  );
 
   client = new Discord.Client();
   client.login(config.login, config.password);
