@@ -23,8 +23,9 @@ Dostępne są podane komendy:\n
     \`skip\` - pomija aktualnie odtwarzany utwór.
     \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
     \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.
-    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:
-    \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy)`;
+    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:.
+    \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy).
+    \`random\` - dodaje do kolejki losowy utwór z bazy danych.`;
 
 var commands = {
   yt: (song) => {
@@ -43,9 +44,7 @@ var commands = {
     database.add(song);
   },
 
-  play: (title) => {
-    let song = database.getByTitle(title);
-
+  play: (song) => {
     if (song !== null) {
       io.emit('play', song);
     }
@@ -64,6 +63,13 @@ var commands = {
     }
 
     bot.sendMessage(songList);
+  },
+
+  random: () => {
+    let randomIndex = Math.floor(Math.random() * database.library.length);
+    let song = database.library[randomIndex];
+
+    commands.play(song);
   }
 };
 
@@ -176,7 +182,7 @@ function parseCommand(args) {
       }
 
       args = args.join(' ').toLowerCase();
-      commands.play(args);
+      commands.play(database.getByTitle(args));
     }
       break;
 
@@ -190,5 +196,9 @@ function parseCommand(args) {
 
       commands.say(args);
     } break;
+
+    case 'random':
+      commands.random();
+      break;
   }
 }
