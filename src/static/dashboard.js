@@ -46,7 +46,6 @@ function say(message) {
             player.setVolume(volume.level);
           }
         });
-        console.log('done!');
       });
     }
   });
@@ -60,7 +59,6 @@ function _speechApiSay(message, callback) {
   msg.lang = 'pl-PL';
 
   msg.onend = () => {
-    console.log('cb done!');
     if (callback) {
       callback();
     }

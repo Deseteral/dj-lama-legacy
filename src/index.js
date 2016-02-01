@@ -5,6 +5,7 @@ const socket = require('socket.io');
 
 import { DiscordBot } from './discord-bot';
 import { Database } from './database';
+import * as help from './help-content';
 
 const HTTP_PORT = 8000;
 
@@ -14,21 +15,6 @@ var io = socket(server);
 
 var database = null;
 var bot = null;
-
-// TODO: Move help to separate file
-// FIXME: Add back channel name
-var helpContent = `Bot reaguje na komendy tylko na kanale #CHANNEL_NAME.
-Parametry podane w \`<>\` są obowiązkowe, \`*takie*\` są opcjonalne.
-Czas podawać w formacie mm:ss, np. 1:30, 12:00 itd.
-Dostępne są podane komendy:\n
-    \`yt <id> *start* *end*\` - dodaje utwór z podanym \`id\` do kolejki odtwarzania, rozpoczynając odtwarzanie od czasu \`start\` do \`end\`.
-    \`song\` - wysyła link do aktualnie odtwarzanego utworu.
-    \`skip\` - pomija aktualnie odtwarzany utwór.
-    \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
-    \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.
-    \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:.
-    \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy).
-    \`random\` - dodaje do kolejki losowy utwór z bazy danych.`;
 
 var commands = {
   yt: (song) => {
@@ -123,7 +109,7 @@ function parseCommand(args) {
   switch (args[0].toLowerCase()) {
     // Chat bot only command
     case 'help':
-      bot.sendMessage(helpContent);
+      bot.sendMessage(help.content);
       break;
 
     // Chat bot only command
