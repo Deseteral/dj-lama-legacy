@@ -1,47 +1,51 @@
 const fs = require('fs');
 const path = require('path');
 
-export var library = [];
-
 const DATABASE_PATH = path.join(__dirname, 'data/database.json');
 
-export function save() {
-  fs.writeFileSync(
-    DATABASE_PATH,
-    JSON.stringify(library, null, 2)
-  );
-}
-
-export function load() {
-  library = JSON.parse(fs.readFileSync(DATABASE_PATH));
-}
-
-export function add(info) {
-  library.push(info);
-  sort();
-  save();
-}
-
-export function getByTitle(title) {
-  for (let i = 0; i < library.length; i++) {
-    if (library[i].title === title) {
-      return library[i];
-    }
+export class Database {
+  constructor() {
+    this.library = [];
   }
 
-  return null;
-}
+  save() {
+    fs.writeFileSync(
+      DATABASE_PATH,
+      JSON.stringify(this.library, null, 2)
+    );
+  }
 
-function sort() {
-  library.sort((a, b) => {
-    if (a.artist < b.artist) {
-      return -1;
+  load() {
+    this.library = JSON.parse(fs.readFileSync(DATABASE_PATH));
+  }
+
+  add(song) {
+    this.library.push(song);
+    this.sort();
+    this.save();
+  }
+
+  getByTitle(title) {
+    for (let i = 0; i < this.library.length; i++) {
+      if (this.library[i].title === title) {
+        return this.library[i];
+      }
     }
 
-    if (a.artist > b.artist) {
-      return 1;
-    }
+    return null;
+  }
 
-    return 0;
-  });
+  sort() {
+    this.library.sort((a, b) => {
+      if (a.artist < b.artist) {
+        return -1;
+      }
+
+      if (a.artist > b.artist) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
 }

@@ -3,40 +3,43 @@ const path = require('path');
 const EventEmitter = require('events').EventEmitter;
 const Discord = require('discord.js');
 
-export const CHANNEL_NAME = 'lama-fm';
+const CHANNEL_NAME = 'lama-fm';
 
-export var client = null;
-export var events = null;
+export class DiscordBot {
+  constructor() {
+    this.client = null;
+    this.events = null;
+    this._channel = null;
+  }
 
-var channel = null;
+  initialize() {
+    let config = JSON.parse(
+      fs.readFileSync(path.join(__dirname, 'data/config.json'))
+    );
 
-export function initialize() {
-  let config = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'data/config.json'))
-  );
+    this.client = new Discord.Client();
+    this.client.login(config.login, config.password);
 
-  client = new Discord.Client();
-  client.login(config.login, config.password);
+    console.log('Logged in to Discord');
 
-  console.log('Logged in to Discord');
+    this.events = new EventEmitter();
 
-  events = new EventEmitter();
+    this.client.on('message', (message) => {
+      if (message.channel.name === CHANNEL_NAME) {
+        if (this._channel === null) {
+          this._channel = message.channel;
+        }
 
-  client.on('message', (message) => {
-    if (message.channel.name === CHANNEL_NAME) {
-      if (channel === null) {
-        channel = message.channel;
+        let args = message.content.split(' ');
+        if (args[0].toLowerCase() === '!dj') {
+          args.shift();
+          this.events.emit('command', args);
+        }
       }
+    });
+  }
 
-      let args = message.content.split(' ');
-      if (args[0].toLowerCase() === '!dj') {
-        args.shift();
-        events.emit('command', args);
-      }
-    }
-  });
-}
-
-export function sendMessage(msg) {
-  client.sendMessage(channel, msg);
+  sendMessage(msg) {
+    this.client.sendMessage(this._channel, msg);
+  }
 }

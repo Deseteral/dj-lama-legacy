@@ -3,14 +3,17 @@ const Server = require('http').Server;
 const express = require('express');
 const socket = require('socket.io');
 
-import * as bot from './discord-bot';
-import * as database from './database';
+import { DiscordBot } from './discord-bot';
+import { Database } from './database';
 
 const HTTP_PORT = 8000;
 
 var app = express();
 var server = Server(app);
 var io = socket(server);
+
+var database = null;
+var bot = null;
 
 // TODO: Move help to separate file
 // FIXME: Add back channel name
@@ -94,9 +97,11 @@ io.on('connection', (socket) => {
 });
 
 // Database initialization
+database = new Database();
 database.load();
 
 // Discord bot initialization
+bot = new DiscordBot();
 bot.initialize();
 bot.events.on('command', (args) => {
   parseCommand(args);
