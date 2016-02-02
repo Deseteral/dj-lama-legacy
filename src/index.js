@@ -221,3 +221,7 @@ function parseCommand(args) {
       break;
   }
 }
+
+// devtool binding
+window.bot = bot;
+window.database = database;
