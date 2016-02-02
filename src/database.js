@@ -24,6 +24,7 @@ export class Database {
 
   add(song) {
     this.library.push(song);
+    this._sortedLibrary.push(song);
     this.save();
     this.sort();
   }
