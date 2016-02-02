@@ -97,8 +97,11 @@ server.listen(HTTP_PORT, () => {
 io.on('connection', (socket) => {
   console.log('New socket connection');
 
-  socket.on('current-song', (id) => {
-    bot.sendMessage(`https://www.youtube.com/watch?v=${id}`);
+  socket.on('song-response', (info) => {
+    bot.sendMessage(
+      `Utworów w kolejce: ${info.queueLength}\n
+      https://www.youtube.com/watch?v=${info.id}`
+    );
   });
 
   // Client socket

@@ -111,7 +111,10 @@ socket.on('play', (info) => {
 
 socket.on('song', () => {
   if (queue[0]) {
-    socket.emit('current-song', queue[0].id);
+    socket.emit('song-response', {
+      id: queue[0].id,
+      queueLength: queue.length
+    });
   }
 });
 
