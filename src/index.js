@@ -47,7 +47,7 @@ var commands = {
   list: () => {
     const SPLIT_LINES_COUNT = 50;
 
-    let lib = database.library;
+    let lib = database._sortedLibrary;
     let messages = [];
 
     for (let line = 0; line < lib.length; line += SPLIT_LINES_COUNT) {
@@ -97,11 +97,19 @@ server.listen(HTTP_PORT, () => {
 io.on('connection', (socket) => {
   console.log('New socket connection');
 
+  // Dashboard socket
   socket.on('song-response', (info) => {
     bot.sendMessage(
       `Utworów w kolejce: ${info.queueLength}\n
       https://www.youtube.com/watch?v=${info.id}`
     );
+  });
+
+  socket.on('dashboard-song-loaded', (details) => {
+    let song = database.findById(details.id);
+    if (song !== null) {
+      database.library[song.index].played++;
+    }
   });
 
   // Client socket
@@ -201,7 +209,7 @@ function parseCommand(args) {
       }
 
       args = args.join(' ').toLowerCase();
-      commands.play(database.getByTitle(args));
+      commands.play(database.findByTitle(args).song);
     }
       break;
 

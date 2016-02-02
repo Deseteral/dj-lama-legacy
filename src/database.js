@@ -6,6 +6,7 @@ const DATABASE_PATH = path.join(__dirname, 'data/database.json');
 export class Database {
   constructor() {
     this.library = [];
+    this._sortedLibrary = [];
   }
 
   save() {
@@ -17,18 +18,36 @@ export class Database {
 
   load() {
     this.library = JSON.parse(fs.readFileSync(DATABASE_PATH));
+    this._sortedLibrary = this.library.slice();
+    this.sort();
   }
 
   add(song) {
     this.library.push(song);
-    this.sort();
     this.save();
+    this.sort();
   }
 
-  getByTitle(title) {
+  findByTitle(title) {
     for (let i = 0; i < this.library.length; i++) {
       if (this.library[i].title === title) {
-        return this.library[i];
+        return {
+          song: this.library[i],
+          index: i
+        };
+      }
+    }
+
+    return null;
+  }
+
+  findById(id) {
+    for (let i = 0; i < this.library.length; i++) {
+      if (this.library[i].id === id) {
+        return {
+          song: this.library[i],
+          index: i
+        };
       }
     }
 
@@ -36,7 +55,7 @@ export class Database {
   }
 
   sort() {
-    this.library.sort((a, b) => {
+    this._sortedLibrary.sort((a, b) => {
       if (a.artist < b.artist) {
         return -1;
       }

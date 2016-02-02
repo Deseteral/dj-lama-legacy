@@ -15,6 +15,10 @@ var controller = {
       startSeconds: timeToSeconds(info.start),
       endSeconds: timeToSeconds(info.end)
     });
+
+    socket.emit('dashboard-song-loaded', {
+      id: info.id
+    });
   },
 
   next: () => {
