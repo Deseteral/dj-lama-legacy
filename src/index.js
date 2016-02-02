@@ -108,6 +108,10 @@ io.on('connection', (socket) => {
   socket.on('dashboard-song-loaded', (details) => {
     let song = database.findById(details.id);
     if (song !== null) {
+      if (database.library[song.index].played === undefined) {
+        database.library[song.index].played = 0;
+      }
+
       database.library[song.index].played++;
     }
   });
