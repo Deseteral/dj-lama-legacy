@@ -39,7 +39,7 @@ export class DiscordBot {
     });
   }
 
-  sendMessage(msg) {
-    this.client.sendMessage(this._channel, msg);
+  sendMessage(msg, callback) {
+    this.client.sendMessage(this._channel, msg, {}, callback);
   }
 }
