@@ -96,6 +96,14 @@ function timeToSeconds(time) {
   return parseInt(time[0]) * 60 + parseInt(time[1]);
 }
 
+window.saveQueue = () => {
+  localStorage.queue = JSON.stringify(queue);
+};
+
+window.loadQueue = () => {
+  queue = JSON.parse(localStorage.queue);
+};
+
 socket.on('play', (info) => {
   if ($checkboxBlockQueue.checked) {
     return;
