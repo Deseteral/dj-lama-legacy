@@ -114,6 +114,8 @@ io.on('connection', (socket) => {
 
       database.library[song.index].played++;
     }
+
+    database.save();
   });
 
   // Client socket
@@ -237,3 +239,7 @@ function parseCommand(args) {
 // devtool binding
 window.bot = bot;
 window.database = database;
+window.exit = () => {
+  database.save();
+  window.close();
+};
