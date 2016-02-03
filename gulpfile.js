@@ -9,7 +9,7 @@ gulp.task('default', ['build-static'], () => {
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(sourcemaps.write('.'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 });
 

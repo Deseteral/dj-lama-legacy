@@ -2,7 +2,6 @@ const path = require('path');
 const Server = require('http').Server;
 const express = require('express');
 const socket = require('socket.io');
-const async = require('async');
 
 import { DiscordBot } from './discord-bot';
 import { Database } from './database';
@@ -67,16 +66,7 @@ var commands = {
       messages.push(songList);
     }
 
-    async.each(messages, (message, callback) => {
-      // 500ms timeout is to make sure that the message gets to the server,
-      // before another one will be sent. This is probably not the best way to
-      // handle this, but it works, so I will leave this for now and come back
-      // later.
-      // TODO: Replace this dirty hack with something reasonable.
-      bot.sendMessage(message, () => {
-        setTimeout(() => callback(), 500);
-      });
-    });
+    bot.sendMessagesSeries(messages);
   },
 
   random: () => {

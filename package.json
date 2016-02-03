@@ -12,7 +12,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "devtool": "^1.4.1",
-    "discord.js": "^5.3.2",
+    "discord.js": "^6.0.0",
     "express": "^4.13.4",
     "socket.io": "^1.4.4"
   },

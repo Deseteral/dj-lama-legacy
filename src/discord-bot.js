@@ -4,12 +4,16 @@ const EventEmitter = require('events').EventEmitter;
 const Discord = require('discord.js');
 
 const CHANNEL_NAME = 'lama-fm';
+const BOT_NAME = 'DJ Lama';
 
 export class DiscordBot {
   constructor() {
     this.client = null;
     this.events = null;
+
     this._channel = null;
+    this._messageQueue = [];
+    this._isProcessingQueue = false;
   }
 
   initialize() {
@@ -30,6 +34,16 @@ export class DiscordBot {
           this._channel = message.channel;
         }
 
+        if (message.author.username === BOT_NAME) {
+          if (this._isProcessingQueue) {
+            this.sendMessage(this._messageQueue.shift());
+
+            if (this._messageQueue.length === 0) {
+              this._isProcessingQueue = false;
+            }
+          }
+        }
+
         let args = message.content.split(' ');
         if (args[0].toLowerCase() === '!dj') {
           args.shift();
@@ -41,5 +55,14 @@ export class DiscordBot {
 
   sendMessage(msg, callback) {
     this.client.sendMessage(this._channel, msg, {}, callback);
+  }
+
+  sendMessagesSeries(messages) {
+    this._messageQueue =  this._messageQueue.concat(messages);
+
+    if (!this._isProcessingQueue) {
+      this._isProcessingQueue = true;
+      this.sendMessage(this._messageQueue.shift());
+    }
   }
 }
