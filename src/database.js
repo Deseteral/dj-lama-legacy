@@ -7,6 +7,9 @@ export class Database {
   constructor() {
     this.library = [];
     this._sortedLibrary = [];
+
+    const SAVE_INTERVAL = 2 * 60 * 1000; // 2 minutes
+    setInterval(() => this.save(), SAVE_INTERVAL);
   }
 
   save() {
