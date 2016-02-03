@@ -52,6 +52,11 @@ var commands = {
     for (let line = 0; line < lib.length; line += SPLIT_LINES_COUNT) {
       let songList = '';
 
+      // Put database length in the first line
+      if (line === 0) {
+        songList = `Utworów w bazie danych: \`${database.library.length}\`\n\n`;
+      }
+
       for (let i = 0; i < SPLIT_LINES_COUNT; i++) {
         let index = i + line;
 
