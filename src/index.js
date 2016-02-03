@@ -74,11 +74,13 @@ var commands = {
     bot.sendMessagesSeries(messages);
   },
 
-  random: () => {
-    let randomIndex = Math.floor(Math.random() * database.library.length);
-    let song = database.library[randomIndex];
+  random: (num = 1) => {
+    for (let i = 0; i < num; i++) {
+      let randomIndex = Math.floor(Math.random() * database.library.length);
+      let song = database.library[randomIndex];
 
-    commands.play(song);
+      commands.play(song);
+    }
   }
 };
 
@@ -166,8 +168,8 @@ function parseCommand(args) {
 
       let song = {
         id: args[1],
-        start: typeof args[2] !== 'undefined' ? args[2] : undefined,
-        end: typeof args[3] !== 'undefined' ? args[3] : undefined
+        start: args[2],
+        end: args[3]
       };
 
       commands.yt(song);
@@ -196,8 +198,8 @@ function parseCommand(args) {
         id: args[0],
         artist: args[1].toLowerCase(),
         title: args[2].toLowerCase(),
-        start: typeof args[3] !== 'undefined' ? args[3] : undefined,
-        end: typeof args[4] !== 'undefined' ? args[4] : undefined,
+        start: args[3],
+        end: args[4]
       };
 
       commands.add(song);
@@ -210,7 +212,11 @@ function parseCommand(args) {
       }
 
       args = args.join(' ').toLowerCase();
-      commands.play(database.findByTitle(args).song);
+
+      let songFromDatabase = database.findByTitle(args);
+      if (songFromDatabase !== null) {
+        commands.play(songFromDatabase.song);
+      }
     }
       break;
 
@@ -226,7 +232,11 @@ function parseCommand(args) {
     } break;
 
     case 'random':
-      commands.random();
+      if (args[1] !== undefined) {
+        commands.random(parseInt(args[1]));
+      } else {
+        commands.random();
+      }
       break;
   }
 }
@@ -234,6 +244,7 @@ function parseCommand(args) {
 // devtool binding
 window.bot = bot;
 window.database = database;
+window.parseCommand = parseCommand;
 window.exit = () => {
   database.save();
   window.close();
