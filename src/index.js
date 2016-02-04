@@ -233,7 +233,9 @@ function parseCommand(args) {
 
     case 'random':
       if (args[1] !== undefined) {
-        commands.random(parseInt(args[1]));
+        if (!isNaN(args[1])) {
+          commands.random(parseInt(args[1]));
+        }
       } else {
         commands.random();
       }

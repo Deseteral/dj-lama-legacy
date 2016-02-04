@@ -10,4 +10,4 @@ Dostępne są podane komendy:\n
     \`play <title>\` - odtwarza utwór o danym tytule z bazy danych.
     \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:.
     \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy).
-    \`random\` - dodaje do kolejki losowy utwór z bazy danych.`;
+    \`random *number*\` - dodaje do kolejki losowy utwór z bazy danych, lub \`number\` losowych utworów.`;
