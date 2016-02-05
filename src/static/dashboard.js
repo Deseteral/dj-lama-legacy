@@ -19,6 +19,19 @@ var controller = {
     socket.emit('dashboard-song-loaded', {
       id: info.id
     });
+
+    // Just for fun :)
+    if (info.id === '9C1BCAgu2I8') {
+      // RESOURCE
+      setTimeout(() => {
+        say('A teraz na antenie radia Lama FM, ta gorsza wersja tego utworu.');
+      }, 1000);
+    } else if (info.id === 'SjkxkfBMCsE') {
+      // RESOURCE
+      setTimeout(() => {
+        say('Zdecydowanie lepsza wersja tego utworu, tylko na antenie radia Lama FM.');
+      }, 1000);
+    }
   },
 
   next: () => {
