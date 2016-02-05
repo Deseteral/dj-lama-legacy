@@ -104,7 +104,7 @@ window.loadQueue = () => {
   queue = JSON.parse(localStorage.queue);
 };
 
-socket.on('play', (info) => {
+socket.on('dashboard-play', (info) => {
   if ($checkboxBlockQueue.checked) {
     return;
   }
@@ -121,16 +121,16 @@ socket.on('play', (info) => {
   }
 });
 
-socket.on('song', () => {
+socket.on('dashboard-song', () => {
   if (queue[0]) {
-    socket.emit('song-response', {
+    socket.emit('dashboard-song-response', {
       id: queue[0].id,
       queueLength: queue.length
     });
   }
 });
 
-socket.on('skip', () => {
+socket.on('dashboard-skip', () => {
   if (queue.length === 1) {
     player.stopVideo();
     queue.shift();
@@ -139,6 +139,6 @@ socket.on('skip', () => {
   controller.next();
 });
 
-socket.on('say', (what) => {
+socket.on('dashboard-say', (what) => {
   say(what);
 });

@@ -17,15 +17,15 @@ var bot = null;
 
 var commands = {
   yt: (song) => {
-    io.emit('play', song);
+    io.emit('dashboard-play', song);
   },
 
   song: () => {
-    io.emit('song');
+    io.emit('dashboard-song');
   },
 
   skip: () => {
-    io.emit('skip');
+    io.emit('dashboard-skip');
   },
 
   add: (song) => {
@@ -34,12 +34,12 @@ var commands = {
 
   play: (song) => {
     if (song !== null) {
-      io.emit('play', song);
+      io.emit('dashboard-play', song);
     }
   },
 
   say: (what) => {
-    io.emit('say', what);
+    io.emit('dashboard-say', what);
   },
 
   list: () => {
@@ -105,7 +105,7 @@ io.on('connection', (socket) => {
   console.log('New socket connection');
 
   // Dashboard socket
-  socket.on('song-response', (info) => {
+  socket.on('dashboard-song-response', (info) => {
     bot.sendMessage(
       `Utworów w kolejce: ${info.queueLength}\n
       https://www.youtube.com/watch?v=${info.id}`
