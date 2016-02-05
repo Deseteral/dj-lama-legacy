@@ -104,12 +104,12 @@ window.loadQueue = () => {
   queue = JSON.parse(localStorage.queue);
 };
 
-socket.on('dashboard-play', (info) => {
+socket.on('dashboard-play', (song) => {
   if ($checkboxBlockQueue.checked) {
     return;
   }
 
-  queue.push(info);
+  queue.push(song);
 
   if (queue.length === 1) {
     controller.load(queue[0]);

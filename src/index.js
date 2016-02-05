@@ -53,6 +53,7 @@ var commands = {
 
       // Put database length in the first line
       if (line === 0) {
+        // RESOURCE
         songList = `Utworów w bazie danych: \`${database.library.length}\`\n\n`;
       }
 
@@ -106,6 +107,7 @@ io.on('connection', (socket) => {
 
   // Dashboard socket
   socket.on('dashboard-song-response', (info) => {
+    // RESOURCE
     bot.sendMessage(
       `Utworów w kolejce: ${info.queueLength}\n
       https://www.youtube.com/watch?v=${info.id}`
@@ -148,6 +150,7 @@ bot.events.on('command', (args) => {
 
 function parseCommand(args) {
   if (args[0] === undefined) {
+    bot.sendMessage('Nie wiem o co Ci biega? lol?'); // RESOURCE
     return;
   }
 
@@ -174,6 +177,8 @@ function parseCommand(args) {
 
     case 'yt': {
       if (args[1] === undefined) {
+        // RESOURCE
+        bot.sendMessage('A podać ID filmu to kto poda. No chyba nie ja.');
         return;
       }
 
@@ -197,12 +202,28 @@ function parseCommand(args) {
       // Make sure args fulfill the requirement of having at least id, artist
       // and title.
       if (args.length < 3) {
+        // RESOURCE
+        bot.sendMessage('Wróć do mnie jak będziesz mieć ID, wykonwacę i tytuł, a teraz nie zawracaj mi głowy. Mam audycję do poprowadzenia.');
         return;
       }
 
       // Trim all of the arguments
       for (let i = 0; i < args.length; i++) {
         args[i] = args[i].trim();
+      }
+
+      let dbSong = database.findById(args[0]);
+      if (dbSong !== null) {
+        // RESOURCE
+        bot.sendMessage(`\`${dbSong.song.title}\` jest już w bazie.`);
+        return;
+      }
+
+      dbSong = database.findByTitle(args[2].toLowerCase());
+      if (dbSong !== null) {
+        // RESOURCE
+        bot.sendMessage(`Utwór o tytule \`${dbSong.song.title}\` jest już w bazie. Jeżeli masz pewność że to inny utwór, pogoń programistę tego cudownego bota żeby dodał możliwość dodawania kawałków o takim samym tytule. A tymczasem spadaj!`);
+        return;
       }
 
       let song = {
@@ -219,6 +240,8 @@ function parseCommand(args) {
     case 'play': {
       args.shift();
       if (args.length === 0) {
+        // RESOURCE
+        bot.sendMessage('Skąd mam wiedzieć co mam grać? Tytuł mi podaj!');
         return;
       }
 
@@ -227,6 +250,9 @@ function parseCommand(args) {
       let songFromDatabase = database.findByTitle(args);
       if (songFromDatabase !== null) {
         commands.play(songFromDatabase.song);
+      } else {
+        // RESOURCE
+        bot.sendMessage('Takiego utworu nie ma w bazie. Wiem, bo szukałam.');
       }
     }
       break;
@@ -234,6 +260,8 @@ function parseCommand(args) {
     case 'say': {
       args.shift();
       if (args.length === 0) {
+        // RESOURCE
+        bot.sendMessage('Jak chcesz kogoś pozdrowić, to wypadało by napisać te pozdrowienia...');
         return;
       }
 
@@ -251,6 +279,9 @@ function parseCommand(args) {
         commands.random();
       }
       break;
+
+    default:
+      bot.sendMessage('Nie wiem o co Ci biega? lol?'); // RESOURCE
   }
 }
 
