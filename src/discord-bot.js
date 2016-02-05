@@ -1,56 +1,24 @@
-const fs = require('fs');
-const path = require('path');
 const EventEmitter = require('events').EventEmitter;
 const Discord = require('discord.js');
 
-const CHANNEL_NAME = 'lama-fm';
-const BOT_NAME = 'DJ Lama';
-
 export class DiscordBot {
-  constructor() {
-    this.client = null;
-    this.events = null;
+  constructor(botName, channelName) {
+    this.client = new Discord.Client();
+    this.events = new EventEmitter();
+
+    this.name = botName;
+    this.channelName = channelName;
 
     this._channel = null;
     this._messageQueue = [];
     this._isProcessingQueue = false;
+
+    this.client.on('message', (message) => this._processMessage(message));
   }
 
-  initialize() {
-    let config = JSON.parse(
-      fs.readFileSync(path.join(__dirname, 'data/config.json'))
-    );
-
-    this.client = new Discord.Client();
-    this.client.login(config.login, config.password);
-
-    console.log('Logged in to Discord');
-
-    this.events = new EventEmitter();
-
-    this.client.on('message', (message) => {
-      if (message.channel.name === CHANNEL_NAME) {
-        if (this._channel === null) {
-          this._channel = message.channel;
-        }
-
-        if (message.author.username === BOT_NAME) {
-          if (this._isProcessingQueue) {
-            this.sendMessage(this._messageQueue.shift());
-
-            if (this._messageQueue.length === 0) {
-              this._isProcessingQueue = false;
-            }
-          }
-        }
-
-        let args = message.content.split(' ');
-        if (args[0].toLowerCase() === '!dj') {
-          args.shift();
-          this.events.emit('command', args);
-        }
-      }
-    });
+  login(username, password) {
+    this.client.login(username, password);
+    console.log('Logged in to Discord server');
   }
 
   sendMessage(msg, callback) {
@@ -63,6 +31,30 @@ export class DiscordBot {
     if (!this._isProcessingQueue) {
       this._isProcessingQueue = true;
       this.sendMessage(this._messageQueue.shift());
+    }
+  }
+
+  _processMessage(message) {
+    if (message.channel.name === this.channelName) {
+      if (this._channel === null) {
+        this._channel = message.channel;
+      }
+
+      if (message.author.username === this.name) {
+        if (this._isProcessingQueue) {
+          this.sendMessage(this._messageQueue.shift());
+
+          if (this._messageQueue.length === 0) {
+            this._isProcessingQueue = false;
+          }
+        }
+      }
+
+      let args = message.content.split(' ');
+      if (args[0].toLowerCase() === '!dj') {
+        args.shift();
+        this.events.emit('command', args);
+      }
     }
   }
 }

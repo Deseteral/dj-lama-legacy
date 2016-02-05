@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const Server = require('http').Server;
 const express = require('express');
@@ -6,8 +7,6 @@ const socket = require('socket.io');
 import { DiscordBot } from './discord-bot';
 import { Database } from './database';
 import * as help from './help-content';
-
-const HTTP_PORT = 8000;
 
 var app = express();
 var server = Server(app);
@@ -84,10 +83,21 @@ var commands = {
   }
 };
 
+// Load config
+var config = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'data/config.json'))
+);
+
+// Update help
+help.content = help.content.replace(
+  '{{CHANNEL_NAME}}',
+  config.discord['channel-name']
+);
+
 // HTTP server initialization
 app.use('/', express.static(path.join(__dirname, 'static')));
-server.listen(HTTP_PORT, () => {
-  console.log('Started HTTP server');
+server.listen(config.port, () => {
+  console.log(`Started HTTP server on port: ${config.port}`);
 });
 
 // socket.io initialization
@@ -126,16 +136,17 @@ database = new Database();
 database.load();
 
 // Discord bot initialization
-bot = new DiscordBot();
-bot.initialize();
+bot = new DiscordBot(
+  config.discord['bot-name'],
+  config.discord['channel-name']
+);
+
+bot.login(config.discord.username, config.discord.password);
 bot.events.on('command', (args) => {
   parseCommand(args);
 });
 
 function parseCommand(args) {
-  // TODO: Add checking whether args exist
-  // TODO: Add documentation
-
   if (args[0] === undefined) {
     return;
   }

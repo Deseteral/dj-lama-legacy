@@ -1,5 +1,5 @@
 export var content =
-`Bot reaguje na komendy tylko na kanale #CHANNEL_NAME.
+`Bot reaguje na komendy tylko na kanale #{{CHANNEL_NAME}}.
 Parametry podane w \`<>\` są obowiązkowe, \`*takie*\` są opcjonalne.
 Czas podawać w formacie mm:ss, np. 1:30, 12:00 itd.
 Dostępne są podane komendy:\n
