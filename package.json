@@ -14,6 +14,7 @@
     "devtool": "^1.4.1",
     "discord.js": "^6.0.0",
     "express": "^4.13.4",
+    "node-fetch": "^1.3.3",
     "socket.io": "^1.4.4"
   },
   "devDependencies": {
