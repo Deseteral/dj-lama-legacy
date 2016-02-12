@@ -84,6 +84,19 @@ var commands = {
   }
 };
 
+// Get IP address;
+var ip;
+fetch('https://api.ipify.org/?format=json')
+  .then((response) => {
+    return response.json();
+  })
+  .then((json) => {
+    ip = json.ip;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 // Load config
 var config = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'data/config.json'))
@@ -99,6 +112,32 @@ help.content = help.content.replace(
 app.use('/', express.static(path.join(__dirname, 'static')));
 server.listen(config.port, () => {
   console.log(`Started HTTP server on port: ${config.port}`);
+});
+
+app.get('/', (req, res) => {
+  let lib = database._sortedLibrary;
+  let songList = '';
+
+  songList = '<html><head><title>LamaFM</title><link rel="stylesheet" type="text/css" href="index.css"/></head><body>';
+
+  // RESOURCE
+  songList += `Utworów w bazie danych: ${database.library.length}`;
+
+  // RESOURCE
+  songList += '<table><tr><th>ID</th><th>Wykonawca</th><th>Tytuł</th><th>Start</th><th>Koniec</th></tr>';
+
+  for (let i = 0; i < lib.length; i++) {
+    let song = lib[i];
+
+    let sstart = song.start || '';
+    let send = song.end || '';
+
+    songList += `<tr><td>${song.id}</td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td></tr>`;
+  }
+
+  songList += '</table></body></html>';
+
+  res.send(songList);
 });
 
 // socket.io initialization
@@ -175,6 +214,11 @@ function parseCommand(args, silent = false) {
     // Chat bot only command
     case 'list':
       commands.list();
+      break;
+
+    // Chat bot only command
+    case 'link':
+      bot.sendMessage(`http://${ip}:${config.port}`);
       break;
 
     case 'yt': {
