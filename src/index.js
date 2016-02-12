@@ -152,7 +152,7 @@ app.get('/', (req, res) => {
     let send = song.end || '';
     let splayed = song.played || '0';
 
-    songList += `<tr><td>${song.id}</td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td><td>${splayed}</td></tr>`;
+    songList += `<tr><td><a href="https://www.youtube.com/watch?v=${song.id}">${song.id}</a></td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td><td>${splayed}</td></tr>`;
   }
 
   songList += '</table></body></html>';
