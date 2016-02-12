@@ -8,6 +8,7 @@ Dostępne są podane komendy:\n
     \`skip\` - pomija aktualnie odtwarzany utwór.
     \`add <id> | <artist> | <title> | *start* | *end*\` - dodaje utwór o podanym id do bazy daych jako tytuł \`title\`, wykonawcę \`artist\` oraz z opcjonalnymi czasami. Ważne, poszczególne pola oddzielone są znakiem \`|\`.
     \`play *[--after/-a]* <title>\` - odtwarza utwór o danym tytule z bazy danych. Jeżeli dodana zostanie flaga \`after\` przebój zostanie dodany po aktualnie odtwarzanym utworze.
+    \`play-new *number*\` - dodaje do kolejki \`number\` (lub 1 jeżeli nie podano) nigdy nie odtwarzanych utworów.
     \`say <sentence>\` - prośba do spikera radiowego o pozdrowienia :wink:.
     \`list\` - wyświetla listę wszystkich utworów w bazie danych (sortowanych po wykonawcy).
     \`random *number*\` - dodaje do kolejki losowy utwór z bazy danych, lub \`number\` losowych utworów.

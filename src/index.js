@@ -77,6 +77,29 @@ var commands = {
 
       commands.play(song, false);
     }
+  },
+
+  playNew: (num = 1) => {
+    let notPlayedSongs = [];
+
+    for (let i = 0; i < database.library.length; i++) {
+      let song = database.library[i];
+      if (song.played === 0 || song.played === undefined) {
+        notPlayedSongs.push(song);
+      }
+
+      if (notPlayedSongs.length === num) {
+        break;
+      }
+    }
+
+    arrayShuffle(notPlayedSongs);
+
+    for (let i = 0; i < notPlayedSongs.length; i++) {
+      commands.play(notPlayedSongs[i], false);
+    }
+
+    return notPlayedSongs.length;
   }
 };
 
@@ -326,6 +349,16 @@ function parseCommand(args, silent = false) {
     }
       break;
 
+    case 'play-new':
+      if (args[1] !== undefined) {
+        if (!isNaN(args[1])) {
+          commands.playNew(parseInt(args[1]));
+        }
+      } else {
+        commands.playNew();
+      }
+      break;
+
     case 'say': {
       args.shift();
       if (args.length === 0) {
@@ -342,12 +375,19 @@ function parseCommand(args, silent = false) {
     } break;
 
     case 'random':
+      let len;
+
       if (args[1] !== undefined) {
         if (!isNaN(args[1])) {
-          commands.random(parseInt(args[1]));
+          len = commands.random(parseInt(args[1]));
         }
       } else {
-        commands.random();
+        len = commands.random();
+      }
+
+      if (len === 0 && !silent) {
+        // RESOURCE
+        bot.sendMessage('Nie mam żadnych nowych kawałków ziomeczki. Dodajcie coś nowego to zagram :wink:');
       }
       break;
 
@@ -356,6 +396,11 @@ function parseCommand(args, silent = false) {
         bot.sendMessage('Nie wiem o co Ci biega? lol?'); // RESOURCE
       }
   }
+}
+
+function arrayShuffle(o) {
+  for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
 }
 
 // devtool binding
