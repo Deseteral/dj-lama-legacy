@@ -16,10 +16,6 @@ var database = null;
 var bot = null;
 
 var commands = {
-  yt: (song) => {
-    io.emit('dashboard-play', song);
-  },
-
   song: () => {
     io.emit('dashboard-song');
   },
@@ -32,9 +28,9 @@ var commands = {
     database.add(song);
   },
 
-  play: (song) => {
+  play: (song, after) => {
     if (song !== null) {
-      io.emit('dashboard-play', song);
+      io.emit('dashboard-play', { song: song, after: after });
     }
   },
 
@@ -79,7 +75,7 @@ var commands = {
       let randomIndex = Math.floor(Math.random() * database.library.length);
       let song = database.library[randomIndex];
 
-      commands.play(song);
+      commands.play(song, false);
     }
   }
 };
@@ -124,15 +120,16 @@ app.get('/', (req, res) => {
   songList += `Utworów w bazie danych: ${database.library.length}`;
 
   // RESOURCE
-  songList += '<table><tr><th>ID</th><th>Wykonawca</th><th>Tytuł</th><th>Start</th><th>Koniec</th></tr>';
+  songList += '<table><tr><th>ID</th><th>Wykonawca</th><th>Tytuł</th><th>Start</th><th>Koniec</th><th>Odtworzeń</th></tr>';
 
   for (let i = 0; i < lib.length; i++) {
     let song = lib[i];
 
     let sstart = song.start || '';
     let send = song.end || '';
+    let splayed = song.played || '0';
 
-    songList += `<tr><td>${song.id}</td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td></tr>`;
+    songList += `<tr><td>${song.id}</td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td><td>${splayed}</td></tr>`;
   }
 
   songList += '</table></body></html>';
@@ -236,7 +233,7 @@ function parseCommand(args, silent = false) {
         end: args[3]
       };
 
-      commands.yt(song);
+      commands.play(song, false);
     } break;
 
     case 'skip':
@@ -301,11 +298,25 @@ function parseCommand(args, silent = false) {
         return;
       }
 
+      if (args.length === 1 && args[0] === 'now') {
+        if (!silent) {
+          // RESOURCE
+          bot.sendMessage('Skąd mam wiedzieć co mam grać? Tytuł mi podaj!');
+        }
+        return;
+      }
+
+      let after;
+      if (args[0] === '--after' || args[0] === '-a') {
+        after = true;
+        args.shift();
+      }
+
       args = args.join(' ').toLowerCase();
 
       let songFromDatabase = database.findByTitle(args);
       if (songFromDatabase !== null) {
-        commands.play(songFromDatabase.song);
+        commands.play(songFromDatabase.song, after);
       } else {
         if (!silent) {
           // RESOURCE
