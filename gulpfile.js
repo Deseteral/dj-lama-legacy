@@ -4,7 +4,7 @@ const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('default', ['build-static'], () => {
   return gulp
-    .src('src/**/*.js')
+    .src(['src/*.js', 'src/static/*.js'])
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']

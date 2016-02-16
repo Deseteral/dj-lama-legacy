@@ -3,6 +3,7 @@ const path = require('path');
 const Server = require('http').Server;
 const express = require('express');
 const socket = require('socket.io');
+const fetch = require('node-fetch');
 
 import { DiscordBot } from './discord-bot';
 import { Database } from './database';

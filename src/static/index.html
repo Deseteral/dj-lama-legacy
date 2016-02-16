@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <title>LamaFM</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+
+  <!-- Libs -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Polymer elements -->
+  <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+
+  <!-- Stylesheets -->
+  <link rel="import" href="app-theme.html">
+  <link rel="import" href="index-styles.html">
+</head>
+<body>
+<template is="dom-bind" id="app">
+  <paper-toolbar>
+    <div class="title">LamaFM</div>
+  </paper-toolbar>
+
+  <paper-tabs selected="{{ selected }}">
+    <paper-tab>STATUS</paper-tab>
+    <paper-tab>KOLEJKA ODTWARZANIA</paper-tab>
+    <paper-tab>LISTA UTWORÓW</paper-tab>
+  </paper-tabs>
+</template>
+</body>
+</html>
