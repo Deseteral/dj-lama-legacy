@@ -133,33 +133,6 @@ server.listen(config.port, () => {
   console.log(`Started HTTP server on port: ${config.port}`);
 });
 
-app.get('/', (req, res) => {
-  let lib = database._sortedLibrary;
-  let songList = '';
-
-  songList = '<html><head><title>LamaFM</title><link rel="stylesheet" type="text/css" href="index.css"/></head><body>';
-
-  // RESOURCE
-  songList += `Utworów w bazie danych: ${database.library.length}`;
-
-  // RESOURCE
-  songList += '<table><tr><th>ID</th><th>Wykonawca</th><th>Tytuł</th><th>Start</th><th>Koniec</th><th>Odtworzeń</th></tr>';
-
-  for (let i = 0; i < lib.length; i++) {
-    let song = lib[i];
-
-    let sstart = song.start || '';
-    let send = song.end || '';
-    let splayed = song.played || '0';
-
-    songList += `<tr><td><a href="https://www.youtube.com/watch?v=${song.id}">${song.id}</a></td><td>${song.artist}</td><td>${song.title}</td><td>${sstart}</td><td>${send}</td><td>${splayed}</td></tr>`;
-  }
-
-  songList += '</table></body></html>';
-
-  res.send(songList);
-});
-
 // socket.io initialization
 io.on('connection', (socket) => {
   console.log('New socket connection');
@@ -404,10 +377,11 @@ function arrayShuffle(o) {
 }
 
 // devtool binding
-window.bot = bot;
-window.database = database;
-window.parseCommand = parseCommand;
-window.exit = () => {
-  database.save();
-  window.close();
-};
+//
+// window.bot = bot;
+// window.database = database;
+// window.parseCommand = parseCommand;
+// window.exit = () => {
+//   database.save();
+//   window.close();
+// };
