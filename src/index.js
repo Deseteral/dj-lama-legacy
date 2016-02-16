@@ -27,6 +27,7 @@ var commands = {
 
   add: (song) => {
     database.add(song);
+    io.emit('client-database-updated', database._sortedLibrary);
   },
 
   play: (song, after) => {
@@ -158,6 +159,10 @@ io.on('connection', (socket) => {
     }
 
     database.save();
+  });
+
+  socket.on('dashboard-queue-updated', (queue) => {
+    io.emit('client-queue-updated', queue);
   });
 
   // Client socket

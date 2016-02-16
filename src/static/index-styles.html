@@ -3,7 +3,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: var(--paper-gray-50);
+  background-color: var(--primary-background-color);
 
   margin: 0;
   height: 100vh;
@@ -22,8 +22,20 @@ paper-tab {
 }
 
 paper-tabs {
+  margin-bottom: 16px;
+
   color: var(--accent-color);
   --paper-tabs-selection-bar-color: var(--accent-color);
+}
+
+iron-pages > div {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+paper-card {
+  max-width: 600px;
+  width: 100%;
 }
 
 </style>
