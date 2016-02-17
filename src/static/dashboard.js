@@ -41,6 +41,8 @@ var controller = {
 
     queue.shift();
     controller.load(queue[0]);
+
+    socket.emit('dashboard-queue-updated', queue);
   }
 };
 

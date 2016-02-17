@@ -44,12 +44,46 @@
     </div>
     <div>
       <paper-card heading="Kolejka odtwarzania">
-        <div class="card-content">Lama FM kolejka</div>
+        <div class="card-content">
+          <table>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Wykonawca</th>
+              <th>Tytuł</th>
+            </tr>
+            <template is="dom-repeat" items="{{ queue }}">
+              <tr>
+                <td>{{ index }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.artist }}</td>
+                <td>{{ item.title }}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
       </paper-card>
     </div>
     <div>
       <paper-card heading="Lista utworów">
-        <div class="card-content">Lama FM lista</div>
+        <div class="card-content">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Wykonawca</th>
+              <th>Tytuł</th>
+              <th>Ilość odtworzeń</th>
+            </tr>
+            <template is="dom-repeat" items="{{ database }}">
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.artist }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.played }}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
       </paper-card>
     </div>
   </iron-pages>

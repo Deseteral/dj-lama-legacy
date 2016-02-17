@@ -16,6 +16,8 @@ var io = socket(server);
 var database = null;
 var bot = null;
 
+var cachedQueue = [];
+
 var commands = {
   song: () => {
     io.emit('dashboard-song');
@@ -129,6 +131,10 @@ help.content = help.content.replace(
   config.discord['channel-name']
 );
 
+// Database initialization
+database = new Database();
+database.load();
+
 // HTTP server initialization
 app.use('/', express.static(path.join(__dirname, 'static')));
 server.listen(config.port, () => {
@@ -163,17 +169,17 @@ io.on('connection', (socket) => {
 
   socket.on('dashboard-queue-updated', (queue) => {
     io.emit('client-queue-updated', queue);
+    cachedQueue = queue;
   });
 
   // Client socket
   socket.on('client-yt', (info) => {
     io.emit('play', info);
   });
-});
 
-// Database initialization
-database = new Database();
-database.load();
+  socket.emit('client-queue-updated', cachedQueue);
+  socket.emit('client-database-updated', database._sortedLibrary);
+});
 
 // Discord bot initialization
 bot = new DiscordBot(
