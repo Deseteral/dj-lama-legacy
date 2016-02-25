@@ -39,7 +39,10 @@
   <iron-pages selected="{{ selected }}">
     <div>
       <paper-card heading="Status">
-        <div class="card-content">Lama FM status</div>
+        <div class="card-content">
+          <div>Liczba utworów w kolejce: {{ queue.length }}</div>
+          <div>Liczba utworów w bazie danych: {{ database.length }}</div>
+        </div>
       </paper-card>
     </div>
     <div>
