@@ -42,6 +42,17 @@
         <div class="card-content">
           <div>Liczba utworów w kolejce: {{ queue.length }}</div>
           <div>Liczba utworów w bazie danych: {{ database.length }}</div>
+          <template is="dom-if" if="{{ onAir.status }}">
+            <div class="on-air-container">
+              <div class="on-air">
+                <div class="status">ON AIR</div>
+                <div class="time-panel">
+                  <div>Audycja trwa od:</div>
+                  <div>{{ timeSinceOnAir }}</div>
+                </div>
+              </div>
+            </div>
+          </template>
         </div>
       </paper-card>
     </div>

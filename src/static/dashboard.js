@@ -3,9 +3,17 @@ var player;
 var queue = [];
 
 var $checkboxBlockQueue;
+var $buttonDatabaseLoad;
+var $buttonOnAir;
 
 document.addEventListener('DOMContentLoaded', () => {
   $checkboxBlockQueue = document.querySelector('#checkbox-block-queue');
+  $buttonDatabaseLoad = document.querySelector('#button-database-load');
+  $buttonOnAir = document.querySelector('#button-on-air');
+
+  $buttonDatabaseLoad.onclick = () =>
+    socket.emit('dashboard-database-request-load');
+  $buttonOnAir.onclick = () => socket.emit('dashboard-set-on-air');
 });
 
 var controller = {

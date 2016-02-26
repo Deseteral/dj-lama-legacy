@@ -20,6 +20,8 @@ export class Database {
     this.library = JSON.parse(fs.readFileSync(DATABASE_PATH));
     this._sortedLibrary = this.library.slice();
     this.sort();
+
+    console.info('Database loaded');
   }
 
   add(song) {

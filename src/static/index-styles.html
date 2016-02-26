@@ -62,4 +62,27 @@ table, th, td {
   border-collapse: collapse;
 }
 
+.on-air-container {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+.on-air {
+  @apply(--layout-vertical);
+}
+
+.on-air .status {
+  color: var(--paper-red-500);
+  font-size: 64px;
+}
+
+.on-air .time-panel {
+  @apply(--layout-vertical);
+}
+
+.on-air div {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
 </style>

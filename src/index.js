@@ -18,6 +18,11 @@ var bot = null;
 
 var cachedQueue = [];
 
+var onAir = {
+  status: false,
+  time: null
+};
+
 var commands = {
   song: () => {
     io.emit('dashboard-song');
@@ -172,11 +177,28 @@ io.on('connection', (socket) => {
     cachedQueue = queue;
   });
 
+  socket.on('dashboard-database-request-load', () => {
+    database.load();
+  });
+
+  socket.on('dashboard-set-on-air', () => {
+    onAir.status = !onAir.status;
+
+    if (onAir.status) {
+      onAir.time = new Date().getTime();
+    } else {
+      onAir.time = null;
+    }
+
+    io.emit('client-on-air', onAir);
+  });
+
   // Client socket
   socket.on('client-yt', (info) => {
     io.emit('play', info);
   });
 
+  socket.emit('client-on-air', onAir);
   socket.emit('client-queue-updated', cachedQueue);
   socket.emit('client-database-updated', database._sortedLibrary);
 });
