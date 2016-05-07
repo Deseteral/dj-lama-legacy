@@ -1,11 +1,11 @@
 # DJ Lama
 Bot that transforms Discord voice channel into user-driven radio station.
 
-<img src="res/logo.svg" width="30%" height="30%">
+<img src="https://cdn.rawgit.com/Deseteral/dj-lama/master/res/logo.svg" width="30%" height="30%">
 
 *Special thanks to my friend Natalia for making this amazing logo.*
 
-Disclaimer: This code was written in the "move fast and break things" fashion,
+Disclaimer: This code was written in the *"move fast and break things"* fashion,
 and thus it works well, but the code itself is not the best quality, and will be
 rewritten (possibly using official Discord API). Also it's not really suitable
 for general use, so if you're looking for music bot for Discord this is probably
