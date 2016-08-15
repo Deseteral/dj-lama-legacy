@@ -17,6 +17,9 @@ this is probably not the best choice :wink:.
 * **Song database**, where users can save their most beloved hits.
 * **Web frontend** with queue and list of songs in database.
 
+## Requirements
+* `node v6.3.1`
+
 ## Building
 First you have to install node modules and download bower components:
 ```
