@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015-node6": "^0.3.0",
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
     "glup": "^1.0.14",
