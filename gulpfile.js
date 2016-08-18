@@ -5,11 +5,23 @@ const sourcemaps = require('gulp-sourcemaps');
 gulp.task('build-js', () =>
   gulp
     .src('src/**/*.js')
+    .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('build'))
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('build/src'))
+);
+
+gulp.task('build-tests', ['build-js'], () =>
+  gulp
+    .src('tests/**/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('build/tests'))
 );
 
 gulp.task('default', ['build-js']);
