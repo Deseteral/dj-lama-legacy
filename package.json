@@ -19,6 +19,7 @@
     "babel-preset-es2015-node6": "^0.3.0",
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
+    "eslint": "^3.8.1",
     "glup": "^1.0.14",
     "gulp-babel": "^6.1.2",
     "gulp-sourcemaps": "^1.6.0",

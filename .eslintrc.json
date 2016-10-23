@@ -6,7 +6,11 @@
   "env": {
     "browser": true,
     "node": true,
+    "es6": true,
     "mocha": true
+  },
+  "globals": {
+    "Polymer": true
   },
   "rules": {
     "no-cond-assign": ["error", "always"],
@@ -110,7 +114,6 @@
       "before": true,
       "after": true
     }],
-    "linebreak-style": ["error", "unix"],
     "lines-around-comment": ["error", {
       "beforeBlockComment": true,
       "allowBlockStart": true,
@@ -118,7 +121,7 @@
     }],
     "max-len": ["error", 80],
     "max-statements-per-line": ["error", { "max": 1 }],
-    "new-cap": "error",
+    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
     "new-parens": "error",
     "no-inline-comments": "error",
     "no-lonely-if": "error",
@@ -153,7 +156,6 @@
     "object-shorthand": "warn",
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
-    "prefer-spread": "error",
-    "prefer-template": "error"
+    "prefer-spread": "error"
   }
 }
