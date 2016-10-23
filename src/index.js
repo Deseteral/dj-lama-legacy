@@ -40,8 +40,10 @@ function loadConfig() {
 
 function startServer() {
   server.get('/', (req, res) => {
-    res.send('Lama FM');
+    res.send('DJ Lama');
   });
+
+  server.use('/dashboard', express.static(path.join(__dirname, 'dashboard')));
 
   server.listen(config.port, () =>
     console.log(`DJ Lama running on port ${config.port}`)
