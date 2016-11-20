@@ -9,9 +9,6 @@
     "es6": true,
     "mocha": true
   },
-  "globals": {
-    "Polymer": true
-  },
   "rules": {
     "no-cond-assign": ["error", "always"],
     "no-constant-condition": "error",
