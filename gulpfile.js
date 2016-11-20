@@ -12,9 +12,9 @@ gulp.task('build-js', () => gulp
   .pipe(gulp.dest('build/src'))
 );
 
-gulp.task('build-dashboard-html', () => gulp
-  .src('src/dashboard/**/*.html')
-  .pipe(gulp.dest('build/src/dashboard'))
+gulp.task('build-public-html', () => gulp
+  .src('src/public/**/*.html')
+  .pipe(gulp.dest('build/src/public'))
 );
 
 gulp.task('build-tests', ['build-js'], () => gulp
@@ -27,4 +27,4 @@ gulp.task('build-tests', ['build-js'], () => gulp
   .pipe(gulp.dest('build/tests'))
 );
 
-gulp.task('default', ['build-js', 'build-dashboard-html']);
+gulp.task('default', ['build-js', 'build-public-html']);

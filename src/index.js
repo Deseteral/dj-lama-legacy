@@ -1,51 +1,19 @@
-import fs from 'fs';
 import path from 'path';
 import express from 'express';
 
-import Database from './database';
-
-const DATA_DIRECTORY_PATH = path.join(__dirname, 'data');
-const DATABASE_PATH = path.join(DATA_DIRECTORY_PATH, 'database.json');
-
-// Create data folder if it doesn't exist
-try {
-  fs.statSync(DATA_DIRECTORY_PATH);
-} catch (e) {
-  fs.mkdirSync(DATA_DIRECTORY_PATH);
-}
-
-// Load config
-const config = loadConfig();
-
-// Load database
-const database = new Database(DATABASE_PATH);
-
-// Start server
+const PORT = process.env.PORT;
 const server = express();
-startServer();
 
-function loadConfig() {
-  let fileData;
+server.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
-  try {
-    fileData = fs.readFileSync(path.join(__dirname, 'data/config.json'));
-  } catch (e) {
-    console.error('No config file!');
-    console.log('Exiting...');
-    process.exit(1);
-  }
+server.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/dashboard.html'));
+});
 
-  return JSON.parse(fileData);
-}
+server.use('/public', express.static(path.join(__dirname, 'public')));
 
-function startServer() {
-  server.get('/', (req, res) => {
-    res.send('DJ Lama');
-  });
-
-  server.use('/dashboard', express.static(path.join(__dirname, 'dashboard')));
-
-  server.listen(config.port, () =>
-    console.log(`DJ Lama running on port ${config.port}`)
-  );
-}
+server.listen(PORT, () =>
+  console.log(`DJ Lama running on port ${PORT}`)
+);
