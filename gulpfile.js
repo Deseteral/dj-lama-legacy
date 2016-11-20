@@ -20,7 +20,10 @@ gulp.task('build-public', () => gulp
 
 gulp.task('build-public-html', () => gulp
   .src('src/public/**/*.html')
-  .pipe(htmlmin({ collapseWhitespace: true }))
+  .pipe(htmlmin({
+    collapseWhitespace: true,
+    minifyCSS: true
+  }))
   .pipe(gulp.dest('build/public'))
 );
 
