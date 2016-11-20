@@ -1,7 +1,10 @@
 {
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+        "jsx": true
+    }
   },
   "env": {
     "browser": true,
@@ -9,6 +12,9 @@
     "es6": true,
     "mocha": true
   },
+  "plugins": [
+    "react"
+  ],
   "rules": {
     "no-cond-assign": ["error", "always"],
     "no-constant-condition": "error",
@@ -153,6 +159,9 @@
     "object-shorthand": "warn",
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
-    "prefer-spread": "error"
+    "prefer-spread": "error",
+
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
 }
