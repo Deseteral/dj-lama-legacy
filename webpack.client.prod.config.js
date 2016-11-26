@@ -2,13 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: [
-    './src/client.js'
-  ],
+  entry: './src/client.js',
   output: {
     path: path.join(__dirname, 'build/public'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'client.js'
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),

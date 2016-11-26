@@ -1,15 +1,11 @@
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    './src/client.js'
-  ],
+  entry: './src/index.js',
   output: {
-    path: path.join(__dirname, 'build/public'),
-    publicPath: '/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'build'),
+    filename: 'server.js'
   },
   module: {
     loaders: [{
@@ -17,14 +13,22 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        presets: ['es2015', 'react']
+        presets: ['es2015-node6', 'react']
       }
     }, {
       test: /\.less$/,
       loader: 'style-loader!css-loader!less-loader'
+    }, {
+      test: /\.json$/,
+      loader: 'json-loader'
     }]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
+  },
+  target: 'node',
+  node: {
+    __dirname: false,
+    __filename: false
   }
 };

@@ -2,13 +2,18 @@
   "name": "dj-lama",
   "version": "2.0.0",
   "description": "A user-driven radio station.",
-  "main": "src/index.js",
+  "main": "build/server.js",
+  "engines": {
+    "node": "7.2.0"
+  },
   "scripts": {
-    "start": "node build/index.js",
-    "build-prod": "webpack --config webpack.prod.config.js && gulp",
-    "build": "webpack --config webpack.dev.config.js && gulp",
-    "postinstall": "npm run build-prod",
-    "test": "eslint \"src/**/*.@(js|jsx)\""
+    "start": "node build/server.js",
+    "postinstall": "npm run build",
+    "test": "eslint \"src/**/*.@(js|jsx)\"",
+    "build": "npm run build-misc && npm run build-server && npm run build-client",
+    "build-misc": "gulp",
+    "build-server": "webpack --config webpack.server.config.js",
+    "build-client": "webpack --config webpack.client.config.js"
   },
   "dependencies": {
     "babel-core": "6.18.2",
@@ -23,6 +28,7 @@
     "gulp-babel": "6.1.2",
     "gulp-htmlmin": "3.0.0",
     "gulp-sourcemaps": "2.2.0",
+    "json-loader": "0.5.4",
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "react": "15.4.0",
