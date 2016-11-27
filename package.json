@@ -14,7 +14,7 @@
     "build-misc": "gulp",
     "build-server": "webpack --config webpack.server.config.js",
     "build-client": "webpack --config webpack.client.config.js",
-    "unit-test": "mocha-webpack --webpack-config webpack.test.config.js --require ./test/setup.js \"src/**/*.test.js\"",
+    "unit-test": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"src/**/*.test.js\"",
     "lint": "eslint \"src/**/*.@(js|jsx)\""
   },
   "dependencies": {
