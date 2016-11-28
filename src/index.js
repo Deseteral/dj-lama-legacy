@@ -3,9 +3,12 @@ import express from 'express';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 
+import { logger, expressLogger } from './utils/logger';
+
 const PORT = process.env.PORT || 8080;
 const server = express();
 
+server.use(expressLogger);
 server.use(compression());
 server.use(
   favicon(path.join(__dirname, 'public/resources/favicon.ico'))
@@ -18,5 +21,5 @@ server.get('/', (req, res) => {
 });
 
 server.listen(PORT, () =>
-  console.log(`DJ Lama running on port ${PORT}`)
+  logger('APP', `DJ Lama running on port ${PORT}`, 'log')
 );
