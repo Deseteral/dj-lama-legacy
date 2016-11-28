@@ -14,8 +14,8 @@
     "build-misc": "gulp",
     "build-server": "webpack --config webpack.server.config.js",
     "build-client": "webpack --config webpack.client.config.js",
-    "unit-test": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"src/**/*.test.js\"",
-    "lint": "eslint \"src/**/*.@(js|jsx)\""
+    "unit-test": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"(src|tests)/**/*.test.js\"",
+    "lint": "eslint \"tests/**/*.js\" ; eslint \"src/**/*.js\" ; eslint \"src/**/*.jsx\""
   },
   "dependencies": {
     "babel-core": "6.18.2",
