@@ -1,37 +1,36 @@
-.coming-soon {
-  &--container {
-    font-family: 'Lobster', cursive;
-    margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.container {
+  font-family: 'Lobster', cursive;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 66%;
+  max-width: 400px;
+}
+
+.title {
+  margin: 0;
+  font-size: 26vw;
+  text-align: center;
+  color: #FFB300;
+}
+
+.subtitle {
+  font-size: 8vw;
+  color: #FFCA28;
+}
+
+@media (min-width: 600px) {
+  .title {
+    font-size: 10em;
   }
 
-  &--logo {
-    width: 66%;
-    max-width: 400px;
-  }
-
-  &--title {
-    margin: 0;
-    font-size: 26vw;
-    text-align: center;
-    color: #FFB300;
-  }
-
-  &--subtitle {
-    font-size: 8vw;
-    color: #FFCA28;
-  }
-
-  @media (min-width: 600px) {
-    &--title {
-      font-size: 10em;
-    }
-
-    &--subtitle {
-      font-size: 3em;
-    }
+  .subtitle {
+    font-size: 3em;
   }
 }

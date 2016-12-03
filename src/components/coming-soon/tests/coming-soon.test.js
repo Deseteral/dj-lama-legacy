@@ -1,6 +1,7 @@
 import React from 'react';
 import ComingSoon from '../coming-soon';
 import { mount } from 'enzyme';
+import classNames from '../coming-soon.less';
 import 'should';
 
 describe('<ComingSoon> component', () => {
@@ -11,15 +12,19 @@ describe('<ComingSoon> component', () => {
   });
 
   it('should render title', () => {
-    wrapper.find('.coming-soon--title').text().should.eql('DJ Lama');
+    findElementByClass('title').text().should.eql('DJ Lama');
   });
 
   it('should render subtitle', () => {
-    wrapper.find('.coming-soon--subtitle').text()
+    findElementByClass('subtitle').text()
       .should.eql('coming sooner or later...');
   });
 
   it('should render logo', () => {
-    wrapper.find('.coming-soon--logo').length.should.eql(1);
+    findElementByClass('logo').length.should.eql(1);
   });
+
+  function findElementByClass(className) {
+    return wrapper.find(`.${classNames[className]}`);
+  }
 });

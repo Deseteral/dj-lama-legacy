@@ -18,7 +18,7 @@ module.exports = {
       }
     }, {
       test: /\.less$/,
-      loader: 'style-loader!css-loader!less-loader'
+      loader: 'style-loader!css?sourceMap&modules&localIdentName=[name]__[local]__[hash:base64:5]!less'
     }]
   },
   resolve: {
