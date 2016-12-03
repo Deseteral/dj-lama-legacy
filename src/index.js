@@ -6,7 +6,11 @@ import compression from 'compression';
 import { logger, expressLogger } from './utils/logger';
 
 const PORT = process.env.PORT || 8080;
+const ENV = process.env.NODE_ENV || 'dev';
 const server = express();
+
+logger('APP', `PORT=${PORT}`, 'log');
+logger('APP', `ENV=${ENV}`, 'log');
 
 server.use(expressLogger);
 server.use(compression());
