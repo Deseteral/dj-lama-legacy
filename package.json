@@ -11,6 +11,7 @@
     "postinstall": "npm run build",
     "test": "npm run unit-test && npm run lint",
     "build": "npm run build-misc && npm run build-server && npm run build-client",
+    "buildAndRun": "npm run build && npm start",
     "build-misc": "gulp",
     "build-server": "webpack --config webpack.server.config.js",
     "build-client": "webpack --config webpack.client.config.js",

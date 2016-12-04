@@ -1,0 +1,23 @@
+@import "../../common.less";
+
+.container {
+  display: flex;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 10px;
+
+  height: @header-height;
+  background: @primary-background-color;
+
+  box-shadow: 0px 4px 20px 2px fade(@primary-background-color, 50%);
+}
+
+.title {
+  font-family: @logo-typeface;
+  font-size: @header-font-size;
+  color: @primary-color;
+}
