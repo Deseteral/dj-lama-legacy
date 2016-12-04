@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../header';
 import { mount } from 'enzyme';
-import classNames from '../coming-soon.less';
+import classNames from '../header.less';
 import 'should';
 
-describe('<ComingSoon> component', () => {
+describe('<Header> component', () => {
   let wrapper;
 
   beforeEach(() => {
