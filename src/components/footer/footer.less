@@ -1,0 +1,52 @@
+@import '../../common.less';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+
+  background: @primary-background-color;
+  height: @footer-height;
+
+  margin-left: -@main-container-padding;
+  margin-right: -@main-container-padding;
+  margin-bottom: -@main-container-padding;
+}
+
+.app {
+  &-title {
+    font-family: @logo-typeface;
+    font-size: 1.8em;
+    color: @primary-color;
+  }
+
+  &-version::before {
+    content: 'v';
+  }
+}
+
+.code {
+  &-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.85em;
+    color: @primary-color;
+  }
+
+  &-icon {
+    font-size: 3em;
+  }
+}
+
+.info {
+  color: @primary-color;
+  font-size: 0.85em;
+
+  &-icon {
+    font-size: 1.4em;
+  }
+}
