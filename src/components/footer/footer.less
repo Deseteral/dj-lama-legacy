@@ -7,7 +7,12 @@
   justify-content: space-around;
   padding: 5px;
 
-  background: @primary-background-color;
+  background: linear-gradient(
+    45deg,
+    @primary-background-color 0%,
+    @primary-background-color 27%,
+    @primary-color 100%
+  );
   height: @footer-height;
 
   margin-left: -@main-container-padding;
@@ -19,7 +24,6 @@
   &-title {
     font-family: @logo-typeface;
     font-size: 1.8em;
-    color: @primary-color;
   }
 
   &-version::before {
@@ -34,7 +38,7 @@
     align-items: center;
     text-decoration: none;
     font-size: 0.85em;
-    color: @primary-color;
+    color: @text-color;
   }
 
   &-icon {
@@ -43,7 +47,6 @@
 }
 
 .info {
-  color: @primary-color;
   font-size: 0.85em;
 
   &-icon {
