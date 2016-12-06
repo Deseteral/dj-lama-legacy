@@ -1,9 +1,14 @@
 import React from 'react';
 
+import styles from './status.less';
+
 export default class Status extends React.Component {
   render() {
     return (
-      <h1>Status page</h1>
+      <div className={styles['container']}>
+        <div className={styles['page-title']}>Status page</div>
+        <img className={styles['logo']} src="/resources/logo.svg"/>
+      </div>
     );
   }
 }
