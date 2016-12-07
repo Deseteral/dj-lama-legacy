@@ -27,7 +27,7 @@ describe('<Footer> component', () => {
 
   it('should render some info message', () => {
     findElementByClass('info').text()
-      .should.eql('Made with favorite while listening to some audiotrack.');
+      .should.eql('Made withfavoritewhile listening to someaudiotrack.');
   });
 
   function findElementByClass(className) {

@@ -18,9 +18,9 @@ export default class Footer extends React.Component {
           </a>
         </div>
         <div className={styles['info']}>
-          Made with&nbsp;
+          <span>Made with</span>
           <i className={`${styles['info-icon']} material-icons`}>favorite</i>
-          &nbsp;while listening to some&nbsp;
+          <span>while listening to some</span>
           <i className={`${styles['info-icon']} material-icons`}>audiotrack</i>.
         </div>
       </div>
