@@ -6,11 +6,11 @@ export default class Footer extends React.Component {
   render() {
     return (
       <div className={styles['container']}>
-        <div>
-          <div className={styles['app-title']}>DJ Lama</div>
-          <div className={styles['app-version']}>{this.props.appVersion}</div>
-        </div>
-        <div>
+        <div className={styles['container-head']}>
+          <div className={styles['app-info']}>
+            <div className={styles['app-title']}>DJ Lama</div>
+            <div className={styles['app-version']}>{this.props.appVersion}</div>
+          </div>
           <a className={styles['code-link']}
              href='https://github.com/Deseteral/dj-lama'>
             <i className={`${styles['code-icon']} material-icons`}>code</i>

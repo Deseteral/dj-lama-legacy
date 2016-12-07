@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 5px;
+  padding: 15px;
 
   background: linear-gradient(
     45deg,
@@ -13,10 +13,20 @@
     @dark-blue 27%,
     @pink 100%
   );
-  height: @footer-height;
+}
+
+.container-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .app {
+  &-info {
+    margin-bottom: 10px;
+  }
+
   &-title {
     font-family: @logo-typeface;
     font-size: 1.8em;
@@ -52,5 +62,19 @@
     font-size: 1.4em;
     margin-left: 2px;
     margin-right: 2px;
+  }
+}
+
+@media(min-width: @breakpoint-mobile-m) {
+  .container-head {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@media(min-width: @breakpoint-laptop) {
+  .container-head {
+    width: 50%;
   }
 }
