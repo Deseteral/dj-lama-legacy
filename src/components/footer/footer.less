@@ -1,0 +1,80 @@
+@import '../../common.less';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 15px;
+
+  background: linear-gradient(
+    45deg,
+    @dark-blue 0%,
+    @dark-blue 27%,
+    @pink 100%
+  );
+}
+
+.container-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.app {
+  &-info {
+    margin-bottom: 10px;
+  }
+
+  &-title {
+    font-family: @logo-typeface;
+    font-size: 1.8em;
+    color: @orange;
+  }
+
+  &-version::before {
+    content: 'v';
+  }
+}
+
+.code {
+  &-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.85em;
+    color: @snow-white;
+  }
+
+  &-icon {
+    font-size: 3em;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+
+  &-icon {
+    font-size: 1.4em;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+}
+
+@media(min-width: @breakpoint-mobile-m) {
+  .container-head {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+@media(min-width: @breakpoint-laptop) {
+  .container-head {
+    width: 50%;
+  }
+}
