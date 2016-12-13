@@ -7,7 +7,7 @@ export default class Status extends React.Component {
     return (
       <div className={styles['container']}>
         <div className={styles['page-title']}>Status page</div>
-        <img className={styles['logo']} src="/resources/logo.svg"/>
+        <img className={styles['logo']} src="public/resources/logo.svg"/>
       </div>
     );
   }
