@@ -1,0 +1,57 @@
+@import '../../common.less';
+
+.container {
+  margin: 15px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+
+  font-size: 56px;
+  color: @snow-white;
+
+  &-title {
+    font-family: @logo-typeface;
+  }
+
+  &-separator {
+    display: none;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  &-subtitle {
+    font-family: @standard-typeface;
+    font-size: 32px;
+  }
+}
+
+.typefaces {
+  color: @snow-white;
+  font-size: 28px;
+
+  &-logo {
+    font-family: @logo-typeface;
+  }
+
+  &-standard {
+    font-family: @standard-typeface;
+  }
+
+  &-mono {
+    font-family: @mono-typeface;
+  }
+}
+
+@media(min-width: 415px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+
+    &-separator {
+      display: inline;
+    }
+  }
+}

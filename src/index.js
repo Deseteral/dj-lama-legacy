@@ -27,11 +27,19 @@ server.use(
 server.use('/public', express.static(path.join(__dirname, 'public')));
 
 server.get('/', (req, res) => {
-  res.send(injectProps({}));
+  const props = {
+    page: 'app'
+  };
+
+  res.send(injectProps(props));
 });
 
 server.get('/style-guide', (req, res) => {
-  res.send(injectProps({}));
+  const props = {
+    page: 'style-guide'
+  };
+
+  res.send(injectProps(props));
 });
 
 server.listen(PORT, () =>
