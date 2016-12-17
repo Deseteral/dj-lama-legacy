@@ -4,6 +4,7 @@ import express from 'express';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 
+import packageJson from '../package.json';
 import { logger, expressLogger } from './utils/logger';
 
 const PORT = process.env.PORT || 8080;
@@ -28,6 +29,7 @@ server.use('/public', express.static(path.join(__dirname, 'public')));
 
 server.get('/', (req, res) => {
   const props = {
+    appVersion: packageJson.version,
     route: '/'
   };
 

@@ -13,7 +13,7 @@ const component = () => {
   case '/style-guide':
     return <StyleGuide/>;
   default:
-    return <App/>;
+    return <App version={props.appVersion}/>;
   }
 };
 
