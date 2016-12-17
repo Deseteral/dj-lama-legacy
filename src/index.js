@@ -28,7 +28,7 @@ server.use('/public', express.static(path.join(__dirname, 'public')));
 
 server.get('/', (req, res) => {
   const props = {
-    page: 'app'
+    route: '/'
   };
 
   res.send(injectProps(props));
@@ -36,7 +36,7 @@ server.get('/', (req, res) => {
 
 server.get('/style-guide', (req, res) => {
   const props = {
-    page: 'style-guide'
+    route: '/style-guide'
   };
 
   res.send(injectProps(props));

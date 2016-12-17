@@ -7,10 +7,10 @@ import StyleGuide from './components/style-guide/style-guide';
 const props = window.__props;
 
 const component = () => {
-  const renderPage = props.page || 'app';
+  const renderPage = props.route || '/';
 
   switch (renderPage) {
-  case 'style-guide':
+  case '/style-guide':
     return <StyleGuide/>;
   default:
     return <App/>;

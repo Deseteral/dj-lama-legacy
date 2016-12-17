@@ -13,8 +13,17 @@ export default class Footer extends React.Component {
           </div>
           <a className={styles['code-link']}
              href='https://github.com/Deseteral/dj-lama'>
-            <i className={`${styles['code-icon']} material-icons`}>code</i>
+            <i className={`${styles['code-icon']} material-icons`}>
+              code
+            </i>
             <div>source code</div>
+          </a>
+          <a className={styles['style-link']}
+             href='/style-guide'>
+            <i className={`${styles['style-icon']} material-icons`}>
+              color_lens
+            </i>
+            <div>style guide</div>
           </a>
         </div>
         <div className={styles['info']}>

@@ -25,6 +25,11 @@ describe('<Footer> component', () => {
       .should.eql('https://github.com/Deseteral/dj-lama');
   });
 
+  it('should render link to style guide', () => {
+    findElementByClass('style-link').prop('href')
+      .should.eql('/style-guide');
+  });
+
   it('should render some info message', () => {
     findElementByClass('info').text()
       .should.eql('Made withfavoritewhile listening to someaudiotrack.');
