@@ -14,7 +14,7 @@ export default class App extends React.Component {
         <div className={styles['container']}>
           <Status/>
         </div>
-        <Footer appVersion='2.0.0'/>
+        <Footer appVersion={this.props.version}/>
       </div>
     );
   }

@@ -122,7 +122,7 @@
       "allowBlockStart": true,
       "allowObjectStart": true
     }],
-    "max-len": ["error", 80],
+    "max-len": ["error", 100],
     "max-statements-per-line": ["error", { "max": 1 }],
     "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
     "new-parens": "error",
