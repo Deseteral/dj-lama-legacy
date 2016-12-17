@@ -60,6 +60,8 @@ export default class StyleGuide extends React.Component {
             </div>
           </div>
         </div>
+        <h2 className={styles['section-title']}>Logo</h2>
+        <img className={styles['logo']} src="public/resources/logo.svg" />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import classNames from '../style-guide.less';
-import 'should';
+import should from 'should';
 
 import StyleGuide from '../style-guide';
 
@@ -25,7 +25,8 @@ describe('<StyleGuide> component', () => {
       .map((el) => el.text())
       .should.eql([
         'Typography',
-        'Color palette'
+        'Color palette',
+        'Logo'
       ]);
   });
 
@@ -40,6 +41,10 @@ describe('<StyleGuide> component', () => {
     findElementByClass('color')
       .length
       .should.eql(8);
+  });
+
+  it('should render logo', () => {
+    should.exist(findElementByClass('logo').node);
   });
 
   function findElementByClass(className) {
