@@ -7,7 +7,7 @@ export default class StyleGuide extends React.Component {
     return (
       <div className={styles['container']}>
         <div className={styles['header']}>
-          <span className={styles['header-title']}>DJ Lama</span>
+          <a className={styles['header-title']} href='/'>DJ Lama</a>
           <span className={styles['header-separator']}>|</span>
           <span className={styles['header-subtitle']}>style guide</span>
         </div>
@@ -61,7 +61,7 @@ export default class StyleGuide extends React.Component {
           </div>
         </div>
         <h2 className={styles['section-title']}>Logo</h2>
-        <img className={styles['logo']} src="public/resources/logo.svg" />
+        <img className={styles['logo']} src='public/resources/logo.svg'/>
       </div>
     );
   }

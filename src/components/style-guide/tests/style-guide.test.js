@@ -12,12 +12,20 @@ describe('<StyleGuide> component', () => {
     wrapper = mount(<StyleGuide/>);
   });
 
-  it('should render page title', () => {
-    findElementByClass('header')
-      .children()
-      .map((n) => n.text())
-      .join(' ')
-      .should.eql('DJ Lama | style guide');
+  describe('page title', () => {
+    it('should render', () => {
+      findElementByClass('header')
+        .children()
+        .map((n) => n.text())
+        .join(' ')
+        .should.eql('DJ Lama | style guide');
+    });
+
+    it('should link to app main page', () => {
+      findElementByClass('header-title')
+        .prop('href')
+        .should.eql('/');
+    });
   });
 
   it('should render section titles', () => {
