@@ -1,13 +1,17 @@
 @import '../../common.less';
 
 .container {
+  display: flex;
+  flex-direction: column;
+
+  font-family: @standard-typeface;
   margin: 15px;
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 
   font-size: 56px;
   color: @snow-white;
@@ -28,9 +32,15 @@
   }
 }
 
+.section-title {
+  font-size: 35px;
+  color: @snow-white;
+}
+
 .typefaces {
   color: @snow-white;
   font-size: 28px;
+  margin-bottom: 15px;
 
   &-logo {
     font-family: @logo-typeface;
@@ -45,6 +55,72 @@
   }
 }
 
+.palette {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: -15px;
+  margin-right: -15px;
+
+  &-group {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.color {
+  position: relative;
+  width: 50vw;
+  height: 50vw;
+  color: @snow-white;
+
+  &-hex {
+    font-family: @mono-typeface;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  &-orange {
+    background: @orange;
+  }
+
+  &-dark-orange {
+    background: @dark-orange;
+  }
+
+  &-blue {
+    background: @blue;
+  }
+
+  &-dark-blue {
+    background: @dark-blue;
+  }
+
+  &-pink {
+    background: @pink;
+  }
+
+  &-dark-pink {
+    background: @dark-pink;
+  }
+
+  &-snow-white {
+    background: @snow-white;
+    color: @dark-night;
+  }
+
+  &-dark-night {
+    background: @dark-night;
+  }
+}
+
 @media(min-width: 415px) {
   .header {
     flex-direction: row;
@@ -53,5 +129,28 @@
     &-separator {
       display: inline;
     }
+  }
+}
+
+@media(min-width: 600px) {
+  .palette {
+    align-self: center;
+    flex-direction: row;
+
+    &-group {
+      flex-direction: column;
+    }
+  }
+
+  .color {
+    width: 25vw;
+    height: 25vw;
+  }
+}
+
+@media(min-width: 1000px) {
+  .color {
+    width: 20vw;
+    height: 20vw;
   }
 }

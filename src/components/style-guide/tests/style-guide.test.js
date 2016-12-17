@@ -20,11 +20,26 @@ describe('<StyleGuide> component', () => {
       .should.eql('DJ Lama | style guide');
   });
 
+  it('should render section titles', () => {
+    findElementByClass('section-title')
+      .map((el) => el.text())
+      .should.eql([
+        'Typography',
+        'Color palette'
+      ]);
+  });
+
   it('should render typefaces', () => {
     findElementByClass('typefaces')
       .children()
       .length
       .should.eql(3);
+  });
+
+  it('should render palette', () => {
+    findElementByClass('color')
+      .length
+      .should.eql(8);
   });
 
   function findElementByClass(className) {
