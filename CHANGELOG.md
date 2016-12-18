@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.0-beta.3
+- New build system.
+
 ## v2.0.0-beta.2
 - Added style guide page.
 - Added link to style guide on footer.

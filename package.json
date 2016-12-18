@@ -1,21 +1,22 @@
 {
   "name": "dj-lama",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "A user-driven radio station.",
   "main": "build/server.js",
   "engines": {
     "node": "7.2.0"
   },
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node build/src/index.js",
     "postinstall": "npm run build",
     "test": "npm run unit-test && npm run lint",
-    "build": "npm run build-misc && npm run build-server && npm run build-client",
-    "buildAndRun": "npm run build && npm start",
-    "build-misc": "gulp",
-    "build-server": "webpack --config webpack.server.config.js",
+    "build": "npm run build-server && npm run build-client",
+    "build-and-run": "npm run build && npm start",
+    "build-server": "gulp",
     "build-client": "webpack --config webpack.client.config.js",
-    "unit-test": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"(src|tests)/**/*.test.js\"",
+    "unit-test": "npm run unit-test-server && npm run unit-test-client",
+    "unit-test-server": "gulp build-server-tests && mocha build/tests/**/*.test.js",
+    "unit-test-client": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"src/components/**/*.test.js\"",
     "lint": "eslint \"tests/**/*.js\" ; eslint \"src/**/*.js\" ; eslint \"src/**/*.jsx\""
   },
   "dependencies": {
@@ -28,10 +29,12 @@
     "css-loader": "0.26.0",
     "express": "4.14.0",
     "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
     "gulp-htmlmin": "3.0.0",
     "json-loader": "0.5.4",
     "less": "2.7.1",
     "less-loader": "2.2.3",
+    "nedb": "1.8.0",
     "react": "15.4.1",
     "react-dom": "15.4.1",
     "serve-favicon": "2.3.2",

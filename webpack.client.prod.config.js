@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   entry: './src/client.js',
   output: {
-    path: path.join(__dirname, 'build/public'),
+    path: path.join(__dirname, 'build/src/public'),
     publicPath: '/',
     filename: 'client.js'
   },
