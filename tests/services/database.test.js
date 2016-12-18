@@ -1,3 +1,4 @@
+require('source-map-support').install();
 import 'should';
 
 import Database from '../../src/services/database';
@@ -30,4 +31,36 @@ describe('Database', () => {
         )
     );
   });
+
+  it('should create joined data object', () =>
+    Promise.resolve(
+      database.collections.library.insert({
+        _id: '12345',
+        'title': 'some title',
+        'artist': 'the artist'
+      })
+    )
+    .then(() =>
+      database.collections.tags.insert({
+        _id: 'asdfgh',
+        name: 'some tag name',
+        songs: ['song-1', 'song-2']
+      })
+    )
+    .then(() => database.getJoinedObject())
+    .then((data) =>
+      data.should.eql({
+        library: [{
+          _id: '12345',
+          'title': 'some title',
+          'artist': 'the artist'
+        }],
+        tags: [{
+          _id: 'asdfgh',
+          name: 'some tag name',
+          songs: ['song-1', 'song-2']
+        }]
+      })
+    )
+  );
 });
