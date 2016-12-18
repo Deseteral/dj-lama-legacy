@@ -10,22 +10,24 @@ describe('Database', () => {
   });
 
   describe('library collection', () => {
-    it('should start empty', (done) => {
-      database.collections.library
-        .count({}, (err, count) => {
-          count.should.eql(0);
-          done();
-        });
-    });
+    it('should start empty', () =>
+      database.collections
+        .library
+        .count({})
+        .then((count) =>
+          count.should.eql(0)
+        )
+    );
   });
 
   describe('tags collection', () => {
-    it('should start empty', (done) => {
-      database.collections.tags
-        .count({}, (err, count) => {
-          count.should.eql(0);
-          done();
-        });
-    });
+    it('should start empty', () =>
+      database.collections
+        .tags
+        .count({})
+        .then((count) =>
+          count.should.eql(0)
+        )
+    );
   });
 });

@@ -1,4 +1,4 @@
-import Datastore from 'nedb';
+import Datastore from 'nedb-promise';
 
 export default class Database {
   constructor() {
@@ -12,16 +12,4 @@ export default class Database {
       tags: new Datastore(options)
     };
   }
-
-  // count(what, collection) {
-  //   return new Promise((resolve, reject) => {
-  //     collection.count(what, (err, count) => {
-  //       if (err) {
-  //         reject(err);
-  //       }
-  //
-  //       resolve(count);
-  //     });
-  //   });
-  // }
 }
