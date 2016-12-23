@@ -13,22 +13,26 @@ export default class Database {
     };
   }
 
+  bootstrap(initialData) {
+    const { library, tags } = initialData;
+
+    return Promise.all([
+      this.collections.library.insert(library),
+      this.collections.tags.insert(tags)
+    ]);
+  }
+
   getJoinedObject() {
-    return new Promise((resolve, reject) => {
-      Promise
-        .resolve({})
-        .then((data) =>
-          this.collections.library
-            .find({})
-            .then((docs) => Object.assign(data, { library: docs }))
-        )
-        .then((data) =>
-          this.collections.tags
-            .find({})
-            .then((docs) => Object.assign(data, { tags: docs }))
-        )
-        .then(resolve)
-        .catch(reject);
-    });
+    return Promise.resolve({})
+      .then((data) =>
+        this.collections.library
+          .find({})
+          .then((docs) => Object.assign(data, { library: docs }))
+      )
+      .then((data) =>
+        this.collections.tags
+          .find({})
+          .then((docs) => Object.assign(data, { tags: docs }))
+      );
   }
 }
