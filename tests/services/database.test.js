@@ -102,7 +102,7 @@ describe('Database', () => {
         songs: ['song-1', 'song-2']
       })
     )
-    .then(() => database.getJoinedObject())
+    .then(() => database.getJoinedCollectionsData())
     .then((data) =>
       data.should.eql({
         library: [{

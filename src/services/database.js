@@ -22,7 +22,7 @@ export default class Database {
     ]);
   }
 
-  getJoinedObject() {
+  getJoinedCollectionsData() {
     return Promise.resolve({})
       .then((data) =>
         this.collections.library

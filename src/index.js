@@ -7,49 +7,99 @@ import compression from 'compression';
 import packageJson from '../package.json';
 import { logger, expressLogger } from './utils/logger';
 
+import Database from './services/database';
+import getApiRouter from './services/api-router';
+
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.NODE_ENV || 'dev';
-const server = express();
+const TAG = 'APP';
 
-logger('APP', `PORT=${PORT}`, 'log');
-logger('APP', `ENV=${ENV}`, 'log');
+logger(TAG, `PORT=${PORT}`, 'log');
+logger(TAG, `ENV=${ENV}`, 'log');
 
-const initialHtml = fs.readFileSync(
-  path.join(__dirname, 'public/index.html'),
-  { encoding: 'utf8' }
-);
+// Main entry point
+Promise.resolve({})
+  .then(readTemplateHtml)
+  .then(loadDatabase)
+  .then(createServer)
+  .then(setupRouting)
+  .then(startServer)
+  .then(() => logger(TAG, `Application started on port ${PORT}`))
+  .catch(console.error);
 
-server.use(expressLogger);
-server.use(compression());
-server.use(
-  favicon(path.join(__dirname, 'public/resources/favicon.ico'))
-);
+function readTemplateHtml(appState) {
+  return new Promise((resolve, reject) => {
+    logger(TAG, 'Reading template HTML');
 
-server.use('/public', express.static(path.join(__dirname, 'public')));
+    const filePath = path.join(__dirname, 'public/index.html');
+    const options = { encoding: 'utf8' };
 
-server.get('/', (req, res) => {
-  const props = {
-    appVersion: packageJson.version,
-    route: '/'
-  };
+    fs.readFile(filePath, options, (err, data) => {
+      if (err) {
+        reject(err);
+      }
 
-  res.send(injectProps(props));
-});
+      resolve(
+        Object.assign(appState, { templateHtml: data })
+      );
+    });
+  });
+}
 
-server.get('/style-guide', (req, res) => {
-  const props = {
-    route: '/style-guide'
-  };
+function loadDatabase(appState) {
+  logger(TAG, 'Loading database');
+  return Object.assign(appState, { database: new Database() });
+}
 
-  res.send(injectProps(props));
-});
+function createServer(appState) {
+  logger(TAG, 'Creating server instance');
+  const server = express();
 
-server.listen(PORT, () =>
-  logger('APP', `DJ Lama running on port ${PORT}`, 'log')
-);
+  server.use(expressLogger);
+  server.use(compression());
+  server.use(
+    favicon(path.join(__dirname, 'public/resources/favicon.ico'))
+  );
 
-function injectProps(props) {
-  return initialHtml.replace(
+  return Object.assign(appState, { server });
+}
+
+function setupRouting(appState) {
+  logger(TAG, 'Setting up routing');
+  const { server, database, templateHtml } = appState;
+
+  server.use('/public', express.static(path.join(__dirname, 'public')));
+  server.use('/api', getApiRouter(database));
+
+  server.get('/', (req, res) => {
+    const props = {
+      appVersion: packageJson.version,
+      route: '/'
+    };
+
+    res.send(injectPropsIntoMarkup(templateHtml, props));
+  });
+
+  server.get('/style-guide', (req, res) => {
+    const props = {
+      route: '/style-guide'
+    };
+
+    res.send(injectPropsIntoMarkup(templateHtml, props));
+  });
+
+  return appState;
+}
+
+function startServer(appState) {
+  return new Promise((resolve) => {
+    logger(TAG, 'Starting the server');
+    appState.server.listen(PORT, () => resolve(appState));
+  });
+}
+
+function injectPropsIntoMarkup(html, props) {
+  return html.replace(
     '<div id="props"></div>',
     `<script>window.__props=${JSON.stringify(props)}</script>`
   );

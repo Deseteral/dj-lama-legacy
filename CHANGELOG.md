@@ -1,7 +1,10 @@
 # Changelog
 
 ## v2.0.0-beta.3
+- HTTP API routes.
+  - `GET /api/database`
 - New build system.
+- New application startup system.
 
 ## v2.0.0-beta.2
 - Added style guide page.
