@@ -23,16 +23,27 @@ export default class Database {
   }
 
   getJoinedCollectionsData() {
-    return Promise.resolve({})
+    return Promise
+      .resolve({})
       .then((data) =>
-        this.collections.library
-          .find({})
+        this.getCollectionData('library')
           .then((docs) => Object.assign(data, { library: docs }))
       )
       .then((data) =>
-        this.collections.tags
-          .find({})
+        this.getCollectionData('tags')
           .then((docs) => Object.assign(data, { tags: docs }))
       );
+  }
+
+  getCollectionData(collectionName) {
+    return new Promise((resolve, reject) => {
+      const collection = this.collections[collectionName];
+
+      if (!collection) {
+        reject(`Collection ${collectionName} does not exist`);
+      }
+
+      collection.find({}).then(resolve);
+    });
   }
 }

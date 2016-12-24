@@ -1,8 +1,9 @@
 # Changelog
 
 ## v2.0.0-beta.3
-- HTTP API routes.
+- HTTP API routes:
   - `GET /api/database`
+  - `GET /database/:collectionName`
 - New build system.
 - New application startup system.
 

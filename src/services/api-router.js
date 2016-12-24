@@ -14,5 +14,12 @@ export default function(database) {
       .then((data) => res.send(data))
   );
 
+  router.get('/database/:collectionName', (req, res) =>
+    database
+      .getCollectionData(req.params.collectionName)
+      .then((data) => res.send(data))
+      .catch((error) => res.send({ error }))
+  );
+
   return router;
 }
