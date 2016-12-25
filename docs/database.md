@@ -9,7 +9,7 @@ Documents are stored in collections:
 ## Song data model
 ```json
 {
-  "id": "some-song-id",
+  "_id": "some-song-id",
   "info": {
     "artist": "chvrches",
     "title": "mother we share"
@@ -29,7 +29,7 @@ If there's no `start` or `end` time, those values will be `undefined`. If they'r
 ## Tag data model
 ```json
 {
-  "id": "some-tag-id",
+  "_id": "some-tag-id",
   "name": "french pop",
   "songs": ["id1", "id32", "id4", "id526"]
 }
