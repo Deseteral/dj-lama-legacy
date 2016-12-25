@@ -22,6 +22,18 @@ export default class Database {
     ]);
   }
 
+  getCollectionData(collectionName) {
+    return new Promise((resolve, reject) => {
+      const collection = this.collections[collectionName];
+
+      if (!collection) {
+        reject(`Collection ${collectionName} does not exist`);
+      }
+
+      collection.find({}).then(resolve);
+    });
+  }
+
   getJoinedCollectionsData() {
     return Promise
       .resolve({})
@@ -33,17 +45,5 @@ export default class Database {
         this.getCollectionData('tags')
           .then((docs) => Object.assign(data, { tags: docs }))
       );
-  }
-
-  getCollectionData(collectionName) {
-    return new Promise((resolve, reject) => {
-      const collection = this.collections[collectionName];
-
-      if (!collection) {
-        reject(`Collection ${collectionName} does not exist`);
-      }
-
-      collection.find({}).then(resolve);
-    });
   }
 }
