@@ -8,10 +8,12 @@ import packageJson from '../package.json';
 import { logger, expressLogger } from './utils/logger';
 
 import Database from './services/database';
+import getDropboxStore from './services/dropbox-store';
 import getApiRouter from './services/api-router';
 
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.NODE_ENV || 'dev';
+const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 const TAG = 'APP';
 
 logger(TAG, `PORT=${PORT}`, 'log');
@@ -20,7 +22,9 @@ logger(TAG, `ENV=${ENV}`, 'log');
 // Main entry point
 Promise.resolve({})
   .then(readTemplateHtml)
-  .then(loadDatabase)
+  .then(connectToStore)
+  .then(initializeDatabase)
+  .then(loadDatabaseFromStore)
   .then(createServer)
   .then(setupRouting)
   .then(startServer)
@@ -46,9 +50,37 @@ function readTemplateHtml(appState) {
   });
 }
 
-function loadDatabase(appState) {
-  logger(TAG, 'Loading database');
+function connectToStore(appState) {
+  logger(TAG, 'Connecting to Dropbox store');
+  return DROPBOX_ACCESS_TOKEN ?
+    Object.assign(appState, { store: getDropboxStore(DROPBOX_ACCESS_TOKEN) }) :
+    appState;
+}
+
+function initializeDatabase(appState) {
+  logger(TAG, 'Initializing database');
   return Object.assign(appState, { database: new Database() });
+}
+
+function loadDatabaseFromStore(appState) {
+  return new Promise((resolve, reject) => {
+    logger(TAG, 'Fetching database from store');
+    const { store, database } = appState;
+
+    if (!store) {
+      logger(TAG, 'Disconnected from store, will use only in memory database');
+      resolve(appState);
+    }
+
+    store
+      .fetchDatabase()
+      .then((data) => {
+        database
+          .bootstrap(data)
+          .then(() => resolve(appState));
+      })
+      .catch(reject);
+  });
 }
 
 function createServer(appState) {
