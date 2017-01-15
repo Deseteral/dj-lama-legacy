@@ -1,7 +1,10 @@
 export default function() {
   return {
     fetch() {
-      return Promise.resolve({});
+      return Promise.resolve({
+        library: [],
+        tags: []
+      });
     },
 
     save() {

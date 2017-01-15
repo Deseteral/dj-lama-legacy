@@ -17,7 +17,7 @@
     "build-client": "webpack --config webpack.client.config.js",
     "unit-test": "npm run unit-test-server && npm run unit-test-client",
     "unit-test-server": "gulp build-server-tests && mocha build/tests/**/*.test.js",
-    "unit-test-client": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup.js \"src/components/**/*.test.js\"",
+    "unit-test-client": "mocha-webpack --webpack-config webpack.test.config.js --require ./tests/setup-components.js \"src/components/**/*.test.js\"",
     "lint": "eslint \"tests/**/*.js\" ; eslint \"src/**/*.js\" ; eslint \"src/**/*.jsx\""
   },
   "dependencies": {
