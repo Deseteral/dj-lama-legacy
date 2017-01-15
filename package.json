@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node build/src/index.js",
+    "inspect": "node --inspect build/src/index.js",
     "postinstall": "npm run build",
     "test": "npm run unit-test && npm run lint",
     "build": "npm run build-server && npm run build-client",

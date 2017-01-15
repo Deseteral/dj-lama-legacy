@@ -1,7 +1,7 @@
 import Datastore from 'nedb-promise';
 
 export default class Database {
-  constructor() {
+  constructor(remoteStore) {
     const options = {
       inMemoryOnly: true,
       autoload: true
@@ -11,6 +11,8 @@ export default class Database {
       library: new Datastore(options),
       tags: new Datastore(options)
     };
+
+    this.remoteStore = remoteStore;
   }
 
   bootstrap(initialData) {
