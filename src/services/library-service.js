@@ -1,28 +1,56 @@
-export default function(router, repository) {
+export default class LibraryService {
+  constructor(database, storage) {
+    this.database = database;
+    this.storage = storage;
+  }
 
-  router.get('/database/library/:ytid', (req, res) =>
-    repository
-      .findOneWithYoutubeId(req.params.ytid)
-      .then((doc) =>
-        doc ? res.send(doc) : res.status(404).end()
+  insert(data) {
+    return this.database.collections
+      .library
+      .insert(data)
+      .then((insertedDoc) => {
+        this.database
+          .getJoinedCollectionsData()
+          .then((joinedData) => this.storage.save(joinedData));
+
+        return insertedDoc;
+      });
+  }
+
+  findOneWithYoutubeId(ytid) {
+    return this.database.collections
+      .library
+      .findOne({ ytid });
+  }
+
+  updateWithYoutubeId(ytid, data) {
+    return this.database.collections
+      .library.update(
+        { ytid },
+        data,
+        { upsert: true, returnUpdatedDocs: true }
       )
-      .catch((error) => res.status(500).send({ error }))
-  );
+      .then((details) => details[1])
+      .then((insertedDoc) => {
+        this.database
+          .getJoinedCollectionsData()
+          .then((joinedData) => this.storage.save(joinedData));
 
-  router.put('/database/library/:ytid', (req, res) =>
-    repository
-      .updateWithYoutubeId(req.params.ytid, req.body)
-      .then((insertedDoc) => res.send(insertedDoc))
-      .catch((error) => res.status(500).send({ error }))
-  );
+        return insertedDoc;
+      });
+  }
 
-  router.delete('/database/library/:ytid', (req, res) =>
-    repository
-      .deleteWithYoutubeId(req.params.ytid)
-      .then((removed) => removed ?
-        res.status(200).end() :
-        res.status(404).end()
-      )
-      .catch((error) => res.status(500).send({ error }))
-  );
+  deleteWithYoutubeId(ytid) {
+    return this.database.collections
+      .library
+      .remove({ ytid })
+      .then((numRemoved) => numRemoved !== 0)
+      .then((didRemove) => {
+        this.database
+          .getJoinedCollectionsData()
+          .then((joinedData) => this.storage.save(joinedData));
+
+        return didRemove;
+      });
+  }
 }

@@ -34,7 +34,7 @@ gulp.task('build-public-html', () => gulp
   .pipe(gulp.dest('build/src/public'))
 );
 
-gulp.task('build-server-tests', ['build-server'], () => gulp
+gulp.task('build-server-tests', () => gulp
   .src(['tests/**/*.test.js'])
   .pipe(sourcemaps.init())
   .pipe(babel({

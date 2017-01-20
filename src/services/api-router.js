@@ -1,10 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import libraryService from './library-service';
+import libraryController from './library-controller';
 
 export default function(appState) {
-  const { database, repositories } = appState;
+  const { database, services } = appState;
   const router = new express.Router();
 
   router.use((req, res, next) => {
@@ -28,7 +28,7 @@ export default function(appState) {
       .catch((error) => res.status(500).send({ error }))
   );
 
-  libraryService(router, repositories.library);
+  libraryController(router, services.library);
 
   return router;
 }

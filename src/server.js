@@ -5,12 +5,12 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 
 import packageJson from '../package.json';
-import { logger, expressLogger } from './utils/logger';
+import { loggerSetQuiet, logger, expressLogger } from './utils/logger';
 
 import Database from './services/database';
 import getFakeStore from './services/fake-store';
 import getDropboxStore from './services/dropbox-store';
-import LibraryRepository from './services/library-repository';
+import LibraryService from './services/library-service';
 import getApiRouter from './services/api-router';
 
 const PORT = process.env.PORT || 8080;
@@ -18,22 +18,34 @@ const ENV = process.env.NODE_ENV || 'dev';
 const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 const TAG = 'APP';
 
-logger(TAG, `PORT=${PORT}`, 'log');
-logger(TAG, `ENV=${ENV}`, 'log');
-
 // Main entry point
-export function start() {
-  Promise.resolve({})
+export function start(initialAppState) {
+  return Promise.resolve(initialAppState)
+    .then(initializeLogger)
+    .then((appState) => {
+      logger(TAG, `PORT=${PORT}`, 'log');
+      logger(TAG, `ENV=${ENV}`, 'log');
+
+      return appState;
+    })
     .then(readTemplateHtml)
     .then(connectToStorage)
     .then(initializeDatabase)
     .then(loadDatabaseFromStore)
-    .then(setupRepositories)
+    .then(setupServices)
     .then(createServer)
     .then(setupRouting)
     .then(startServer)
-    .then(() => logger(TAG, `Application started on port ${PORT}`))
+    .then((appState) => {
+      logger(TAG, `Application started on port ${PORT}`);
+      return appState;
+    })
     .catch(console.error);
+}
+
+function initializeLogger(appState) {
+  loggerSetQuiet(appState.quiet);
+  return appState;
 }
 
 function readTemplateHtml(appState) {
@@ -83,14 +95,14 @@ function loadDatabaseFromStore(appState) {
   });
 }
 
-function setupRepositories(appState) {
-  logger(TAG, 'Setting up data repositories');
+function setupServices(appState) {
+  logger(TAG, 'Setting up services');
 
-  const repositories = {
-    library: new LibraryRepository(appState.database, appState.storage)
+  const services = {
+    library: new LibraryService(appState.database, appState.storage)
   };
 
-  return Object.assign(appState, { repositories });
+  return Object.assign(appState, { services });
 }
 
 function createServer(appState) {
