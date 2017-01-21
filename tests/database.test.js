@@ -1,7 +1,7 @@
 require('source-map-support').install();
 import 'should';
 
-import Database from '../../src/services/database';
+import Database from '../src/domain/database';
 
 describe('Database', () => {
   let database;

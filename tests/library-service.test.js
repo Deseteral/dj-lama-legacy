@@ -1,5 +1,5 @@
 require('source-map-support').install();
-import { start } from '../../src/server';
+import { start } from '../src/server';
 import request from 'supertest';
 import 'should';
 

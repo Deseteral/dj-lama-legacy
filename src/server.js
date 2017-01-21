@@ -7,11 +7,13 @@ import compression from 'compression';
 import packageJson from '../package.json';
 import { loggerSetQuiet, logger, expressLogger } from './utils/logger';
 
-import Database from './services/database';
-import getFakeStore from './services/fake-store';
-import getDropboxStore from './services/dropbox-store';
+import Database from './domain/database';
+
+import getFakeStorage from './storages/fake-storage';
+import getDropboxStorage from './storages/dropbox-storage';
+
 import LibraryService from './services/library-service';
-import getApiRouter from './services/api-router';
+import getApiRouter from './controllers/api-router';
 
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.NODE_ENV || 'dev';
@@ -31,7 +33,7 @@ export function start(initialAppState) {
     .then(readTemplateHtml)
     .then(connectToStorage)
     .then(initializeDatabase)
-    .then(loadDatabaseFromStore)
+    .then(loadDatabaseFromStorage)
     .then(setupServices)
     .then(createServer)
     .then(setupRouting)
@@ -70,8 +72,8 @@ function readTemplateHtml(appState) {
 function connectToStorage(appState) {
   logger(TAG, 'Connecting to remote storage');
   return DROPBOX_ACCESS_TOKEN ?
-    Object.assign(appState, { storage: getDropboxStore(DROPBOX_ACCESS_TOKEN) }) :
-    Object.assign(appState, { storage: getFakeStore() });
+    Object.assign(appState, { storage: getDropboxStorage(DROPBOX_ACCESS_TOKEN) }) :
+    Object.assign(appState, { storage: getFakeStorage() });
 }
 
 function initializeDatabase(appState) {
@@ -79,7 +81,7 @@ function initializeDatabase(appState) {
   return Object.assign(appState, { database: new Database(appState.store) });
 }
 
-function loadDatabaseFromStore(appState) {
+function loadDatabaseFromStorage(appState) {
   return new Promise((resolve, reject) => {
     logger(TAG, 'Fetching database from store');
     const { storage, database } = appState;
