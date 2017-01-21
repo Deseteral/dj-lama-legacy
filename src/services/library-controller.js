@@ -1,12 +1,19 @@
 export default function(router, libraryService) {
 
+  router.get('/database/library', (req, res) =>
+    libraryService
+      .findAll()
+      .then((data) => res.json(data))
+      .catch((error) => res.status(500).json({ error }))
+  );
+
   router.get('/database/library/ytid/:ytid', (req, res) =>
     libraryService
       .findOneWithYoutubeId(req.params.ytid)
       .then((doc) =>
-        doc ? res.send(doc) : res.status(404).end()
+        doc ? res.json(doc) : res.status(404).end()
       )
-      .catch((error) => res.status(500).send({ error }))
+      .catch((error) => res.status(500).json({ error }))
   );
 
   router.post('/database/library', (req, res) =>
@@ -14,17 +21,16 @@ export default function(router, libraryService) {
       .insert(req.body)
       .then((insertedDoc) => res
         .status(201)
-        .type('Content-Type', 'application/json')
-        .send(insertedDoc)
+        .json(insertedDoc)
       )
-      .catch((error) => res.status(500).send({ error }))
+      .catch((error) => res.status(500).json({ error }))
   );
 
   router.put('/database/library/ytid/:ytid', (req, res) =>
     libraryService
       .updateWithYoutubeId(req.params.ytid, req.body)
-      .then((insertedDoc) => res.send(insertedDoc))
-      .catch((error) => res.status(500).send({ error }))
+      .then((insertedDoc) => res.json(insertedDoc))
+      .catch((error) => res.status(500).json({ error }))
   );
 
   router.delete('/database/library/ytid/:ytid', (req, res) =>
@@ -34,6 +40,6 @@ export default function(router, libraryService) {
         res.status(200).end() :
         res.status(404).end()
       )
-      .catch((error) => res.status(500).send({ error }))
+      .catch((error) => res.status(500).json({ error }))
   );
 }

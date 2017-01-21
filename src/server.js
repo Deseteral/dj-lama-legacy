@@ -148,7 +148,9 @@ function setupRouting(appState) {
 function startServer(appState) {
   return new Promise((resolve) => {
     logger(TAG, 'Starting the server');
-    appState.server.listen(PORT, () => resolve(appState));
+    const serverInstance = appState.server.listen(PORT, () => {
+      resolve(Object.assign(appState, { serverInstance }));
+    });
   });
 }
 

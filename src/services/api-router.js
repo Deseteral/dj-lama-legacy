@@ -17,15 +17,8 @@ export default function(appState) {
   router.get('/database', (req, res) =>
     database
       .getJoinedCollectionsData()
-      .then((data) => res.send(data))
-      .catch((error) => res.status(500).send({ error }))
-  );
-
-  router.get('/database/:collectionName', (req, res) =>
-    database
-      .getCollectionData(req.params.collectionName)
-      .then((data) => res.send(data))
-      .catch((error) => res.status(500).send({ error }))
+      .then((data) => res.json(data))
+      .catch((error) => res.status(500).json({ error }))
   );
 
   libraryController(router, services.library);

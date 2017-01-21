@@ -17,6 +17,12 @@ export default class LibraryService {
       });
   }
 
+  findAll() {
+    return this.database.collections
+      .library
+      .find({});
+  }
+
   findOneWithYoutubeId(ytid) {
     return this.database.collections
       .library

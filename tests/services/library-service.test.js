@@ -13,6 +13,8 @@ describe('Library service', () => {
     })
   );
 
+  afterEach(() => appState.serverInstance.close());
+
   it('should read all songs', (done) => {
     const firstSong = {
       info: {
@@ -52,7 +54,7 @@ describe('Library service', () => {
         new Promise((resolve, reject) =>
           request(appState.server)
             .post('/api/database/library')
-            .set('Content-Type', 'application/json')
+            .set('Content-Type', 'application/json; charset=utf-8')
             .send(song)
             .end((err, res) => err ? reject(err) : resolve(res))
         )
@@ -61,18 +63,20 @@ describe('Library service', () => {
     Promise.all(postRequests)
       .then(() => {
         request(appState.server)
-          .set('Accept', 'application/json')
           .get('/api/database/library')
-          .send()
+          .set('Accept', 'application/json; charset=utf-8')
           .expect(200)
-          .expect('Content-Type', 'application/json')
+          .expect('Content-Type', 'application/json; charset=utf-8')
           .expect((res) => {
             const songs = res.body;
 
             songs.length.should.eql(3);
-            songs[0].info.title.should.eql('first-song-title');
-            songs[1].info.title.should.eql('second-song-title');
-            songs[2].info.title.should.eql('third-song-title');
+            songs.map((s) => s.info.title)
+              .should.containDeep([
+                'first-song-title',
+                'second-song-title',
+                'third-song-title'
+              ]);
           })
           .end(done);
       });
@@ -94,7 +98,7 @@ describe('Library service', () => {
 
     request(appState.server)
       .post('/api/database/library')
-      .set('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
       .expect((res) => {
         const newSong = res.body;
@@ -113,11 +117,10 @@ describe('Library service', () => {
       })
       .end(() =>
         request(appState.server)
-          .set('Accept', 'application/json')
           .get('/api/database/library/ytid/_songsytid')
-          .send()
+          .set('Accept', 'application/json; charset=utf-8')
           .expect(200)
-          .expect('Content-Type', 'application/json')
+          .expect('Content-Type', 'application/json; charset=utf-8')
           .expect((res) => {
             const resSong = res.body;
 
@@ -153,11 +156,10 @@ describe('Library service', () => {
 
     request(appState.server)
       .post('/api/database/library')
-      .set('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
       .expect(201)
-      .expect('Content-Type', 'application/json')
-      .expect('Location', 'http://localhost:8080/api/database/library/ytid/_songsytid')
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .expect((res) => {
         const newSong = res.body;
 
@@ -201,14 +203,14 @@ describe('Library service', () => {
 
     request(appState.server)
       .post('/api/database/library')
-      .set('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
       .end(() =>
         request(appState.server)
           .put('/api/database/library/ytid/_songsytid')
-          .set('Content-Type', 'application/json')
+          .set('Content-Type', 'application/json; charset=utf-8')
           .send(updatedSong)
-          .expect('Content-Type', 'application/json')
+          .expect('Content-Type', 'application/json; charset=utf-8')
           .expect(200)
           .expect((res) => {
             const newSong = res.body;
@@ -244,7 +246,7 @@ describe('Library service', () => {
 
     request(appState.server)
       .post('/api/database/library')
-      .set('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
       .end(() =>
         request(appState.server)
@@ -253,9 +255,8 @@ describe('Library service', () => {
           .expect((res) => res.body.should.eql({}))
           .end(() =>
             request(appState.server)
-              .set('Accept', 'application/json')
               .get('/api/database/library')
-              .send()
+              .set('Accept', 'application/json; charset=utf-8')
               .expect((res) => res.body.should.eql([]))
               .end(done)
           )
