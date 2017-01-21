@@ -13,7 +13,7 @@ import getFakeStorage from './storages/fake-storage';
 import getDropboxStorage from './storages/dropbox-storage';
 
 import LibraryService from './services/library-service';
-import getApiRouter from './controllers/api-router';
+import getApiController from './controllers/api-controller';
 
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.NODE_ENV || 'dev';
@@ -125,7 +125,7 @@ function setupRouting(appState) {
   const { server, templateHtml } = appState;
 
   server.use('/public', express.static(path.join(__dirname, 'public')));
-  server.use('/api', getApiRouter(appState));
+  server.use('/api', getApiController(appState));
 
   server.get('/', (req, res) => {
     const props = {
