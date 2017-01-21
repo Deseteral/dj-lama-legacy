@@ -21,7 +21,7 @@ export default function(appState) {
       .catch((error) => res.status(500).json({ error }))
   );
 
-  libraryController(router, services.library);
+  router.use('/database/library', libraryController(services.library));
 
   return router;
 }
