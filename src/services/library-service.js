@@ -1,3 +1,5 @@
+import songBuilder from '../domain/song';
+
 export default class LibraryService {
   constructor(database, storage) {
     this.database = database;
@@ -5,9 +7,11 @@ export default class LibraryService {
   }
 
   insert(data) {
+    const song = songBuilder(data).build();
+
     return this.database.collections
       .library
-      .insert(data)
+      .insert(song)
       .then((insertedDoc) => {
         this.database
           .getJoinedCollectionsData()
@@ -30,10 +34,12 @@ export default class LibraryService {
   }
 
   updateWithYoutubeId(ytid, data) {
+    const song = songBuilder(data).build();
+
     return this.database.collections
       .library.update(
         { ytid },
-        data,
+        song,
         { upsert: true, returnUpdatedDocs: true }
       )
       .then((details) => details[1])
