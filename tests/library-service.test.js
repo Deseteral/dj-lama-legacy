@@ -140,6 +140,32 @@ describe('Library service', () => {
       );
   });
 
+  it('should not find not existing song', (done) => {
+    const song = {
+      info: {
+        artist: 'song-artist',
+        title: 'song-title'
+      },
+      ytid: '_songsytid',
+      played: 16,
+      time: {
+        start: '0:14',
+        end: '3:23'
+      }
+    };
+
+    request(appState.server)
+      .post('/api/database/library')
+      .set('Content-Type', 'application/json; charset=utf-8')
+      .send(song)
+      .end(() =>
+        request(appState.server)
+          .get('/api/database/library/ytid/not-existing-id')
+          .expect(404)
+          .end(done)
+      );
+  });
+
   it('should create new song', (done) => {
     const song = {
       info: {
