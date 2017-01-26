@@ -1,7 +1,7 @@
-require('source-map-support').install();
 import 'should';
-
 import Database from '../src/domain/database';
+
+require('source-map-support').install();
 
 describe('Database', () => {
   let database;
@@ -15,7 +15,7 @@ describe('Database', () => {
       database.collections
         .library
         .count({})
-        .then((count) => count.should.eql(0))
+        .then(count => count.should.eql(0))
     );
   });
 
@@ -24,7 +24,7 @@ describe('Database', () => {
       database.collections
         .tags
         .count({})
-        .then((count) => count.should.eql(0))
+        .then(count => count.should.eql(0))
     );
   });
 
@@ -39,17 +39,17 @@ describe('Database', () => {
       .then(database.collections
         .library
         .count({})
-        .then((count) => count.should.eql(2))
+        .then(count => count.should.eql(2))
       )
       .then(database.collections
         .tags
         .count({})
-        .then((count) => count.should.eql(2))
+        .then(count => count.should.eql(2))
       )
       .then(database.collections
         .library
         .findOne({ _id: '2222' })
-        .then((doc) => doc.should.eql({
+        .then(doc => doc.should.eql({
           _id: '2222',
           title: 'second title',
           artist: 'second artist'
@@ -58,7 +58,7 @@ describe('Database', () => {
       .then(database.collections
         .tags
         .findOne({ _id: 'aaaa' })
-        .then((doc) => doc.should.eql({
+        .then(doc => doc.should.eql({
           _id: 'aaaa',
           name: 'some tag name',
           songs: ['song-1', 'song-2']
@@ -74,7 +74,7 @@ describe('Database', () => {
       database.collections.tags.insert(tagsFixture())
     )
     .then(() => database.getCollectionData('tags'))
-    .then((data) =>
+    .then(data =>
       data.should.eql([{
         _id: 'aaaa',
         name: 'some tag name',
@@ -95,7 +95,7 @@ describe('Database', () => {
       database.collections.tags.insert(tagsFixture())
     )
     .then(() => database.getJoinedCollectionsData())
-    .then((data) =>
+    .then(data =>
       data.should.eql({
         library: [{
           _id: '1111',

@@ -39,13 +39,13 @@ export default class Database {
   getJoinedCollectionsData() {
     return Promise
       .resolve({})
-      .then((data) =>
+      .then(data =>
         this.getCollectionData('library')
-          .then((docs) => Object.assign(data, { library: docs }))
+          .then(docs => Object.assign(data, { library: docs }))
       )
-      .then((data) =>
+      .then(data =>
         this.getCollectionData('tags')
-          .then((docs) => Object.assign(data, { tags: docs }))
+          .then(docs => Object.assign(data, { tags: docs }))
       );
   }
 }

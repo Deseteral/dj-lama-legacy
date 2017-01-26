@@ -21,7 +21,7 @@ const DROPBOX_ACCESS_TOKEN = process.env.DROPBOX_ACCESS_TOKEN;
 const TAG = 'APP';
 
 // Main entry point
-export function start(initialAppState) {
+export default function start(initialAppState) {
   return Promise.resolve(initialAppState)
     .then(initializeLogger)
     .then((appState) => {
@@ -42,7 +42,7 @@ export function start(initialAppState) {
       logger(TAG, `Application started on port ${PORT}`);
       return appState;
     })
-    .catch(console.error);
+    .catch(err => logger(TAG, err, 'error'));
 }
 
 function initializeLogger(appState) {
@@ -159,6 +159,6 @@ function startServer(appState) {
 function injectPropsIntoMarkup(html, props) {
   return html.replace(
     '<div id="props"></div>',
-    `<script>window.__props=${JSON.stringify(props)}</script>`
+    `<script>window.applicationConfig=${JSON.stringify(props)}</script>`
   );
 }

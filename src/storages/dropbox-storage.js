@@ -1,6 +1,9 @@
 import Dropbox from 'dropbox';
+import logger from '../utils/logger';
 
-export default function(accessToken) {
+const TAG = 'DROPBOX STORAGE';
+
+export default function (accessToken) {
   const dropbox = new Dropbox({ accessToken });
   const path = '/database.json';
 
@@ -8,7 +11,7 @@ export default function(accessToken) {
     fetch() {
       return new Promise((resolve, reject) => dropbox
         .filesDownload({ path })
-        .then((response) =>
+        .then(response =>
           resolve(JSON.parse(response.fileBinary))
         )
         .catch(reject)
@@ -23,7 +26,7 @@ export default function(accessToken) {
           '.tag': 'overwrite'
         }
       })
-      .catch((err) => console.error(err));
+      .catch(err => logger(TAG, err, 'error'));
     }
   };
 }

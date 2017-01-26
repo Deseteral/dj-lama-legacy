@@ -1,4 +1,4 @@
-export default function(initialSong = {}) {
+export default function (initialSong = {}) {
   let song = {
     info: initialSong.info || { artist: '', title: '' },
     ytid: initialSong.ytid || '',

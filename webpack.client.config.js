@@ -4,7 +4,7 @@ const configurator = process.env.NODE_ENV === 'production' ?
   require('./webpack.client.dev.config.js');
 
 const initialConfig = {
-  entry: './src/client.js',
+  entry: './src/client.jsx',
   output: {
     path: path.join(__dirname, 'build/src/public'),
     publicPath: '/',

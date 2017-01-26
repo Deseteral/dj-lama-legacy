@@ -1,7 +1,7 @@
+import 'should';
 import React from 'react';
 import { mount } from 'enzyme';
 import classNames from '../footer.less';
-import 'should';
 
 import Footer from '../footer';
 
@@ -9,7 +9,7 @@ describe('<Footer> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Footer appVersion='2.0.0'/>);
+    wrapper = mount(<Footer appVersion="2.0.0" />);
   });
 
   it('should render app title', () => {

@@ -1,7 +1,7 @@
+import 'should';
 import React from 'react';
 import { mount } from 'enzyme';
 import classNames from '../status.less';
-import 'should';
 
 import Status from '../status';
 
@@ -9,7 +9,7 @@ describe('<Status> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Status/>);
+    wrapper = mount(<Status />);
   });
 
   it('should render page title', () => {

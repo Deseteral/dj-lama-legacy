@@ -15,7 +15,7 @@ export default class LibraryService {
       .then((insertedDoc) => {
         this.database
           .getJoinedCollectionsData()
-          .then((joinedData) => this.storage.save(joinedData));
+          .then(joinedData => this.storage.save(joinedData));
 
         return insertedDoc;
       });
@@ -42,11 +42,11 @@ export default class LibraryService {
         song,
         { upsert: true, returnUpdatedDocs: true }
       )
-      .then((details) => details[1])
+      .then(details => details[1])
       .then((insertedDoc) => {
         this.database
           .getJoinedCollectionsData()
-          .then((joinedData) => this.storage.save(joinedData));
+          .then(joinedData => this.storage.save(joinedData));
 
         return insertedDoc;
       });
@@ -56,11 +56,11 @@ export default class LibraryService {
     return this.database.collections
       .library
       .remove({ ytid })
-      .then((numRemoved) => numRemoved !== 0)
+      .then(numRemoved => numRemoved !== 0)
       .then((didRemove) => {
         this.database
           .getJoinedCollectionsData()
-          .then((joinedData) => this.storage.save(joinedData));
+          .then(joinedData => this.storage.save(joinedData));
 
         return didRemove;
       });

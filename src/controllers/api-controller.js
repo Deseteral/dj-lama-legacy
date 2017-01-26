@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 
 import libraryController from './library-controller';
 
-export default function(appState) {
+export default function (appState) {
   const { database, services } = appState;
   const router = new express.Router();
 
@@ -17,8 +17,8 @@ export default function(appState) {
   router.get('/database', (req, res) =>
     database
       .getJoinedCollectionsData()
-      .then((data) => res.json(data))
-      .catch((error) => res.status(500).json({ error }))
+      .then(data => res.json(data))
+      .catch(error => res.status(500).json({ error }))
   );
 
   router.use('/database/library', libraryController(services.library));

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 let quiet = false;
 
 export function loggerSetQuiet(isQuiet) {

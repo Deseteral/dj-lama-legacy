@@ -1,10 +1,10 @@
-require('source-map-support').install();
-import { start } from '../src/server';
-import request from 'supertest';
 import 'should';
+import request from 'supertest';
+import start from '../src/server';
+
+require('source-map-support').install();
 
 describe('Library service', () => {
-
   let appState;
 
   beforeEach(() =>
@@ -50,13 +50,13 @@ describe('Library service', () => {
     };
 
     const postRequests = [firstSong, secondSong, thirdSong]
-      .map((song) =>
+      .map(song =>
         new Promise((resolve, reject) =>
           request(appState.server)
             .post('/api/database/library')
             .set('Content-Type', 'application/json; charset=utf-8')
             .send(song)
-            .end((err, res) => err ? reject(err) : resolve(res))
+            .end((err, res) => (err ? reject(err) : resolve(res)))
         )
       );
 
@@ -72,7 +72,7 @@ describe('Library service', () => {
             const songs = res.body;
 
             songs.length.should.eql(3);
-            songs.map((s) => s.info.title)
+            songs.map(s => s.info.title)
               .should.containDeep([
                 'first-song-title',
                 'second-song-title',

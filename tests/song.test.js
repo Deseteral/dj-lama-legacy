@@ -1,7 +1,7 @@
-require('source-map-support').install();
 import 'should';
-
 import songBuilder from '../src/domain/song';
+
+require('source-map-support').install();
 
 describe('Song builder', () => {
   it('should build basic song', () => {

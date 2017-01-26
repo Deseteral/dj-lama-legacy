@@ -1,7 +1,7 @@
+import 'should';
 import React from 'react';
 import { mount } from 'enzyme';
 import classNames from '../header.less';
-import 'should';
 
 import Header from '../header';
 
@@ -9,7 +9,7 @@ describe('<Header> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Header/>);
+    wrapper = mount(<Header />);
   });
 
   it('should render title', () => {
