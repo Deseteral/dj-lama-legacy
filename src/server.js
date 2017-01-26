@@ -78,12 +78,12 @@ function connectToStorage(appState) {
 
 function initializeDatabase(appState) {
   logger(TAG, 'Initializing database');
-  return Object.assign(appState, { database: new Database(appState.store) });
+  return Object.assign(appState, { database: new Database(appState.storage) });
 }
 
 function loadDatabaseFromStorage(appState) {
   return new Promise((resolve, reject) => {
-    logger(TAG, 'Fetching database from store');
+    logger(TAG, 'Fetching database from storage');
     const { storage, database } = appState;
 
     storage
@@ -101,7 +101,7 @@ function setupServices(appState) {
   logger(TAG, 'Setting up services');
 
   const services = {
-    library: new LibraryService(appState.database, appState.storage)
+    library: new LibraryService(appState.database)
   };
 
   return Object.assign(appState, { services });

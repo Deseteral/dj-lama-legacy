@@ -1,5 +1,6 @@
 import 'should';
 import request from 'supertest';
+import sinon from 'sinon';
 import start from '../src/server';
 
 require('source-map-support').install();
@@ -9,11 +10,15 @@ describe('Library service', () => {
 
   beforeEach(() =>
     start({ quiet: true }).then((state) => {
+      sinon.spy(state.database, 'persist');
       appState = state;
     })
   );
 
-  afterEach(() => appState.serverInstance.close());
+  afterEach(() => {
+    appState.database.persist.restore();
+    appState.serverInstance.close();
+  });
 
   it('should read all songs', () => {
     const firstSong = {
@@ -205,6 +210,8 @@ describe('Library service', () => {
           end: '3:23'
         });
 
+        appState.database.persist.calledOnce.should.eql(true);
+
         done();
       });
   });
@@ -258,6 +265,8 @@ describe('Library service', () => {
               end: '3:23'
             });
 
+            appState.database.persist.callCount.should.eql(2);
+
             done();
           })
       );
@@ -287,6 +296,8 @@ describe('Library service', () => {
           .end((deleteErr, deleteRes) => {
             deleteRes.status.should.eql(204);
             deleteRes.body.should.eql('');
+
+            appState.database.persist.callCount.should.eql(2);
 
             request(appState.server)
               .get('/api/database/library')

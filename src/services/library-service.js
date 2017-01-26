@@ -1,9 +1,8 @@
 import songBuilder from '../domain/song';
 
 export default class LibraryService {
-  constructor(database, storage) {
+  constructor(database) {
     this.database = database;
-    this.storage = storage;
   }
 
   insert(data) {
@@ -13,10 +12,7 @@ export default class LibraryService {
       .library
       .insert(song)
       .then((insertedDoc) => {
-        this.database
-          .getJoinedCollectionsData()
-          .then(joinedData => this.storage.save(joinedData));
-
+        this.database.persist();
         return insertedDoc;
       });
   }
@@ -44,10 +40,7 @@ export default class LibraryService {
       )
       .then(details => details[1])
       .then((insertedDoc) => {
-        this.database
-          .getJoinedCollectionsData()
-          .then(joinedData => this.storage.save(joinedData));
-
+        this.database.persist();
         return insertedDoc;
       });
   }
@@ -58,10 +51,7 @@ export default class LibraryService {
       .remove({ ytid })
       .then(numRemoved => numRemoved !== 0)
       .then((didRemove) => {
-        this.database
-          .getJoinedCollectionsData()
-          .then(joinedData => this.storage.save(joinedData));
-
+        this.database.persist();
         return didRemove;
       });
   }

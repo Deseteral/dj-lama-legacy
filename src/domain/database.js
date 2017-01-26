@@ -1,7 +1,7 @@
 import Datastore from 'nedb-promise';
 
 export default class Database {
-  constructor(remoteStore) {
+  constructor(storage) {
     const options = {
       inMemoryOnly: true,
       autoload: true
@@ -12,7 +12,7 @@ export default class Database {
       tags: new Datastore(options)
     };
 
-    this.remoteStore = remoteStore;
+    this.storage = storage;
   }
 
   bootstrap(initialData) {
@@ -47,5 +47,10 @@ export default class Database {
         this.getCollectionData('tags')
           .then(docs => Object.assign(data, { tags: docs }))
       );
+  }
+
+  persist() {
+    this.getJoinedCollectionsData()
+      .then(joinedData => this.storage.save(joinedData));
   }
 }

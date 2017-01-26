@@ -10,7 +10,7 @@ describe('<App> component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<App />);
+    wrapper = shallow(<App version="1.0.0" />);
   });
 
   it('should render header', () => {
