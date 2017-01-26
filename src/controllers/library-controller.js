@@ -40,7 +40,7 @@ export default function(libraryService) {
     libraryService
       .deleteWithYoutubeId(req.params.ytid)
       .then((removed) => removed ?
-        res.status(200).end() :
+        res.status(204).end() :
         res.status(404).end()
       )
       .catch((error) => res.status(500).json({ error }))

@@ -15,7 +15,7 @@ describe('Library service', () => {
 
   afterEach(() => appState.serverInstance.close());
 
-  it('should read all songs', (done) => {
+  it('should read all songs', () => {
     const firstSong = {
       info: {
         artist: 'first-song-artist',
@@ -60,14 +60,15 @@ describe('Library service', () => {
         )
       );
 
-    Promise.all(postRequests)
+    return Promise.all(postRequests)
       .then(() => {
         request(appState.server)
           .get('/api/database/library')
           .set('Accept', 'application/json; charset=utf-8')
-          .expect(200)
-          .expect('Content-Type', 'application/json; charset=utf-8')
-          .expect((res) => {
+          .end((err, res) => {
+            res.status.should.eql(200);
+            res.type.should.eql('application/json');
+
             const songs = res.body;
 
             songs.length.should.eql(3);
@@ -77,8 +78,7 @@ describe('Library service', () => {
                 'second-song-title',
                 'third-song-title'
               ]);
-          })
-          .end(done);
+          });
       });
   });
 
@@ -100,44 +100,45 @@ describe('Library service', () => {
       .post('/api/database/library')
       .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
-      .expect((res) => {
-        const newSong = res.body;
+      .end((postErr, postRes) => {
+        const postSong = postRes.body;
 
-        newSong._id.length.should.be.above(1);
-        newSong.info.should.eql({
+        postSong._id.length.should.be.above(1);
+        postSong.info.should.eql({
           artist: 'song-artist',
           title: 'song-title'
         });
-        newSong.ytid.should.eql('_songsytid');
-        newSong.played.should.eql(16);
-        newSong.time.should.eql({
+        postSong.ytid.should.eql('_songsytid');
+        postSong.played.should.eql(16);
+        postSong.time.should.eql({
           start: '0:14',
           end: '3:23'
         });
-      })
-      .end(() =>
+
         request(appState.server)
           .get('/api/database/library/ytid/_songsytid')
           .set('Accept', 'application/json; charset=utf-8')
-          .expect(200)
-          .expect('Content-Type', 'application/json; charset=utf-8')
-          .expect((res) => {
-            const resSong = res.body;
+          .end((getErr, getRes) => {
+            getRes.status.should.eql(200);
+            getRes.type.should.eql('application/json');
 
-            resSong._id.length.should.be.above(1);
-            resSong.info.should.eql({
+            const getSong = getRes.body;
+
+            getSong._id.length.should.be.above(1);
+            getSong.info.should.eql({
               artist: 'song-artist',
               title: 'song-title'
             });
-            resSong.ytid.should.eql('_songsytid');
-            resSong.played.should.eql(16);
-            resSong.time.should.eql({
+            getSong.ytid.should.eql('_songsytid');
+            getSong.played.should.eql(16);
+            getSong.time.should.eql({
               start: '0:14',
               end: '3:23'
             });
-          })
-          .end(done)
-      );
+
+            done();
+          });
+      });
   });
 
   it('should not find not existing song', (done) => {
@@ -161,8 +162,10 @@ describe('Library service', () => {
       .end(() =>
         request(appState.server)
           .get('/api/database/library/ytid/not-existing-id')
-          .expect(404)
-          .end(done)
+          .end((err, res) => {
+            res.status.should.eql(404);
+            done();
+          })
       );
   });
 
@@ -184,9 +187,10 @@ describe('Library service', () => {
       .post('/api/database/library')
       .set('Content-Type', 'application/json; charset=utf-8')
       .send(song)
-      .expect(201)
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .expect((res) => {
+      .end((err, res) => {
+        res.status.should.eql(201);
+        res.type.should.eql('application/json');
+
         const newSong = res.body;
 
         newSong._id.length.should.be.above(1);
@@ -200,8 +204,9 @@ describe('Library service', () => {
           start: '0:14',
           end: '3:23'
         });
-      })
-      .end(done);
+
+        done();
+      });
   });
 
   it('should update song', (done) => {
@@ -236,9 +241,10 @@ describe('Library service', () => {
           .put('/api/database/library/ytid/_songsytid')
           .set('Content-Type', 'application/json; charset=utf-8')
           .send(updatedSong)
-          .expect('Content-Type', 'application/json; charset=utf-8')
-          .expect(200)
-          .expect((res) => {
+          .end((err, res) => {
+            res.status.should.eql(200);
+            res.type.should.eql('application/json');
+
             const newSong = res.body;
 
             newSong.info.should.eql({
@@ -251,8 +257,9 @@ describe('Library service', () => {
               start: '0:14',
               end: '3:23'
             });
+
+            done();
           })
-          .end(done)
       );
   });
 
@@ -277,15 +284,18 @@ describe('Library service', () => {
       .end(() =>
         request(appState.server)
           .delete('/api/database/library/ytid/_songsytid')
-          .expect(204)
-          .expect((res) => res.body.should.eql({}))
-          .end(() =>
+          .end((deleteErr, deleteRes) => {
+            deleteRes.status.should.eql(204);
+            deleteRes.body.should.eql('');
+
             request(appState.server)
               .get('/api/database/library')
               .set('Accept', 'application/json; charset=utf-8')
-              .expect((res) => res.body.should.eql([]))
-              .end(done)
-          )
+              .end((getErr, getRes) => {
+                getRes.body.should.eql([]);
+                done();
+              });
+          })
       );
   });
 });
