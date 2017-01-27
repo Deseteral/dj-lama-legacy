@@ -1,32 +1,44 @@
 import Dropbox from 'dropbox';
-import logger from '../utils/logger';
+import { logger } from '../utils/logger';
 
 const TAG = 'DROPBOX STORAGE';
 
-export default function (accessToken) {
-  const dropbox = new Dropbox({ accessToken });
-  const path = '/database.json';
+export default class DropboxStorage {
+  constructor(accessToken) {
+    this.dropbox = new Dropbox({ accessToken });
+    this.databasePath = '/database.json';
+  }
 
-  return {
-    fetch() {
-      return new Promise((resolve, reject) => dropbox
-        .filesDownload({ path })
-        .then(response =>
-          resolve(JSON.parse(response.fileBinary))
-        )
-        .catch(reject)
-      );
-    },
+  fetchDatabase() {
+    return new Promise((resolve, reject) => this.dropbox
+      .filesDownload({ path: this.databasePath })
+      .then(response =>
+        resolve(JSON.parse(response.fileBinary))
+      )
+      .catch(reject)
+    );
+  }
 
-    save(data) {
-      dropbox.filesUpload({
-        contents: JSON.stringify(data, null, 2),
+  saveDatabase(data) {
+    this.uploadFileWithOverwrite(
+      JSON.stringify(data, null, 2), // TODO: Remove pretty print on production data, minify instead
+      this.databasePath
+    )
+    .then(() => logger(TAG, 'Persisted database to Dropbox storage'))
+    .catch(err => logger(TAG, err, 'error'));
+  }
+
+  uploadFileWithOverwrite(contents, path) {
+    return new Promise((resolve, reject) =>
+      this.dropbox.filesUpload({
+        contents,
         path,
         mode: {
           '.tag': 'overwrite'
         }
       })
-      .catch(err => logger(TAG, err, 'error'));
-    }
-  };
+      .then(resolve)
+      .catch(reject)
+    );
+  }
 }

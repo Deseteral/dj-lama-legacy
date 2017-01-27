@@ -9,8 +9,8 @@ import { loggerSetQuiet, logger, expressLogger } from './utils/logger';
 
 import Database from './domain/database';
 
-import getFakeStorage from './storages/fake-storage';
-import getDropboxStorage from './storages/dropbox-storage';
+import buildFakeStorage from './storages/fake-storage';
+import DropboxStorage from './storages/dropbox-storage';
 
 import LibraryService from './services/library-service';
 import getApiController from './controllers/api-controller';
@@ -72,8 +72,8 @@ function readTemplateHtml(appState) {
 function connectToStorage(appState) {
   logger(TAG, 'Connecting to remote storage');
   return DROPBOX_ACCESS_TOKEN ?
-    Object.assign(appState, { storage: getDropboxStorage(DROPBOX_ACCESS_TOKEN) }) :
-    Object.assign(appState, { storage: getFakeStorage() });
+    Object.assign(appState, { storage: new DropboxStorage(DROPBOX_ACCESS_TOKEN) }) :
+    Object.assign(appState, { storage: buildFakeStorage() });
 }
 
 function initializeDatabase(appState) {
@@ -87,7 +87,7 @@ function loadDatabaseFromStorage(appState) {
     const { storage, database } = appState;
 
     storage
-      .fetch()
+      .fetchDatabase()
       .then((data) => {
         database
           .bootstrap(data)

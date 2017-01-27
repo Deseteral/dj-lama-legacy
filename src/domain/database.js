@@ -51,6 +51,6 @@ export default class Database {
 
   persist() {
     this.getJoinedCollectionsData()
-      .then(joinedData => this.storage.save(joinedData));
+      .then(joinedData => this.storage.saveDatabase(joinedData));
   }
 }
