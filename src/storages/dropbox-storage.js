@@ -15,6 +15,7 @@ export default class DropboxStorage {
       .then(response =>
         resolve(JSON.parse(response.fileBinary))
       )
+      .then(() => logger(TAG, 'Fetched database from Dropbox storage'))
       .catch(reject)
     );
   }

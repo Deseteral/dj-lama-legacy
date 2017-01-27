@@ -1,7 +1,7 @@
 export default function (initialSong = {}) {
   let song = {
-    info: initialSong.info || { artist: '', title: '' },
-    ytid: initialSong.ytid || '',
+    info: initialSong.info || { artist: null, title: null },
+    ytid: initialSong.ytid || null,
     played: initialSong.played || 0,
     time: initialSong.time || {},
     notWorking: initialSong.notWorking || false

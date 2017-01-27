@@ -1,4 +1,5 @@
 import Datastore from 'nedb-promise';
+import songBuilder from './song';
 
 export default class Database {
   constructor(storage) {
@@ -16,7 +17,8 @@ export default class Database {
   }
 
   bootstrap(initialData) {
-    const { library, tags } = initialData;
+    const library = initialData.library.map(song => songBuilder(song).build());
+    const tags = initialData.tags;
 
     return Promise.all([
       this.collections.library.insert(library),
