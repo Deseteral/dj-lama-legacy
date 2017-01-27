@@ -1,15 +1,11 @@
 export default function (initialSong = {}) {
-  let song = {
+  const song = {
     info: initialSong.info || { artist: null, title: null },
     ytid: initialSong.ytid || null,
     played: initialSong.played || 0,
     time: initialSong.time || {},
     notWorking: initialSong.notWorking || false
   };
-
-  if (initialSong._id) {
-    song = Object.assign(song, { _id: initialSong._id });
-  }
 
   return {
     withArtist(artist) {
@@ -48,7 +44,9 @@ export default function (initialSong = {}) {
     },
 
     build() {
-      return song;
+      return initialSong._id
+        ? Object.assign(song, { _id: initialSong._id })
+        : song;
     }
   };
 }

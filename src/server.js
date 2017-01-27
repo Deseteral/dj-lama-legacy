@@ -71,9 +71,9 @@ function readTemplateHtml(appState) {
 
 function connectToStorage(appState) {
   logger(TAG, 'Connecting to remote storage');
-  return DROPBOX_ACCESS_TOKEN ?
-    Object.assign(appState, { storage: new DropboxStorage(DROPBOX_ACCESS_TOKEN) }) :
-    Object.assign(appState, { storage: buildFakeStorage() });
+  return DROPBOX_ACCESS_TOKEN
+    ? Object.assign(appState, { storage: new DropboxStorage(DROPBOX_ACCESS_TOKEN) })
+    : Object.assign(appState, { storage: buildFakeStorage() });
 }
 
 function initializeDatabase(appState) {

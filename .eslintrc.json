@@ -11,6 +11,9 @@
     "dot-notation": "off",
     "no-use-before-define": ["error", { "functions": false }],
     "no-underscore-dangle": ["error", { "allow": ["_id", "__props"] }],
+    "operator-linebreak": ["error", "after", {
+      "overrides": { "?": "before", ":": "before" }
+    }],
     "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".test.js"] }]
   }
 }

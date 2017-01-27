@@ -37,9 +37,9 @@ export default function (libraryService) {
   router.delete('/ytid/:ytid', (req, res) =>
     libraryService
       .deleteWithYoutubeId(req.params.ytid)
-      .then(removed => (removed ?
-        res.status(204).end() :
-        res.status(404).end()
+      .then(removed => (removed
+        ? res.status(204).end()
+        : res.status(404).end()
       ))
       .catch(error => res.status(500).json({ error }))
   );
