@@ -12,9 +12,11 @@ export function logger(tag, message, level = 'log') {
   }
 
   const date = new Date().toISOString();
-  const msg = `[${date}] [${tag}]: ${message}`;
+  const textMessage = typeof message === 'object'
+    ? JSON.stringify(message)
+    : message;
 
-  console[level](msg);
+  console[level](`[${date}] [${tag}]: ${textMessage}`);
 }
 
 export function expressLogger(req, res, next) {

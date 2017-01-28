@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.0-beta.4
+- Fixed logger printing [Object object] instead of JSON representation.
+
 ## v2.0.0-beta.3
 - Database library REST API
 - New build system.
