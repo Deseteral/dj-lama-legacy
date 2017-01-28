@@ -1,4 +1,16 @@
+/* eslint-disable no-console */
+
+let quiet = false;
+
+export function loggerSetQuiet(isQuiet) {
+  quiet = isQuiet;
+}
+
 export function logger(tag, message, level = 'log') {
+  if (quiet) {
+    return;
+  }
+
   const date = new Date().toISOString();
   const msg = `[${date}] [${tag}]: ${message}`;
 

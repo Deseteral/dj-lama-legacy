@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.0-beta.3
+- Database library REST API
+- New build system.
+- New application startup system.
+
 ## v2.0.0-beta.2
 - Added style guide page.
 - Added link to style guide on footer.

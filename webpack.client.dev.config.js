@@ -1,27 +1,8 @@
-const path = require('path');
+const config = {
+  devtool: 'source-map'
+};
 
 module.exports = {
-  devtool: 'source-map',
-  entry: './src/client.js',
-  output: {
-    path: path.join(__dirname, 'build/public'),
-    publicPath: '/',
-    filename: 'client.js'
-  },
-  module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['es2015', 'react']
-      }
-    }, {
-      test: /\.less$/,
-      loader: 'style-loader!css?sourceMap&modules&localIdentName=[name]__[local]__[hash:base64:5]!less'
-    }]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  }
+  config,
+  cssHash: '[name]__[local]__[hash:base64:5]'
 };
