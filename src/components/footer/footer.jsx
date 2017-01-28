@@ -30,7 +30,7 @@ export default function Footer({ appVersion }) {
         </a>
         <a
           className={styles['changelog-link']}
-          href="/public/CHANGELOG.md"
+          href="/changelog"
         >
           <i className={`${styles['changelog-icon']} material-icons`}>
             content_paste

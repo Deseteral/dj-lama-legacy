@@ -31,6 +31,7 @@ export default function start(initialAppState) {
       return appState;
     })
     .then(readTemplateHtml)
+    .then(readChangelog)
     .then(connectToStorage)
     .then(initializeDatabase)
     .then(loadDatabaseFromStorage)
@@ -64,6 +65,25 @@ function readTemplateHtml(appState) {
 
       resolve(
         Object.assign(appState, { templateHtml: data })
+      );
+    });
+  });
+}
+
+function readChangelog(appState) {
+  return new Promise((resolve, reject) => {
+    logger(TAG, 'Reading changelog.md');
+
+    const filePath = path.join(__dirname, 'public/CHANGELOG.md');
+    const options = { encoding: 'utf8' };
+
+    fs.readFile(filePath, options, (err, data) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(
+        Object.assign(appState, { changelogMarkdown: data })
       );
     });
   });
@@ -126,15 +146,15 @@ function createServer(appState) {
 
 function setupRouting(appState) {
   logger(TAG, 'Setting up routing');
-  const { server, templateHtml } = appState;
+  const { server, templateHtml, changelogMarkdown } = appState;
 
   server.use('/public', express.static(path.join(__dirname, 'public')));
   server.use('/api', getApiController(appState));
 
   server.get('/', (req, res) => {
     const props = {
-      appVersion: packageJson.version,
-      route: '/'
+      route: '/',
+      appVersion: packageJson.version
     };
 
     res.send(injectPropsIntoMarkup(templateHtml, props));
@@ -143,6 +163,16 @@ function setupRouting(appState) {
   server.get('/style-guide', (req, res) => {
     const props = {
       route: '/style-guide'
+    };
+
+    res.send(injectPropsIntoMarkup(templateHtml, props));
+  });
+
+  server.get('/changelog', (req, res) => {
+    const props = {
+      route: '/changelog',
+      appVersion: packageJson.version,
+      changelogMarkdown
     };
 
     res.send(injectPropsIntoMarkup(templateHtml, props));

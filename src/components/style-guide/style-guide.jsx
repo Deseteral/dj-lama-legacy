@@ -14,7 +14,7 @@ export default function StyleGuide() {
       <div className={styles['typefaces']}>
         <div className={styles['typefaces-logo']}>Lobster</div>
         <div className={styles['typefaces-standard']}>Raleway</div>
-        <div className={styles['typefaces-mono']}>Fira Mono</div>
+        <div className={styles['typefaces-mono']}>Ubuntu Mono</div>
       </div>
       <h2 className={styles['section-title']}>Color palette</h2>
       <div className={styles['palette']}>
@@ -50,7 +50,7 @@ export default function StyleGuide() {
         </div>
         <div className={styles['palette-group']}>
           <div className={`${styles['color']} ${styles['color-snow-white']}`}>
-            <div className={styles['color-hex']}>#ffffff</div>
+            <div className={styles['color-hex']}>#fafafa</div>
             <div className={styles['color-name']}>snow white</div>
           </div>
           <div className={`${styles['color']} ${styles['color-dark-night']}`}>

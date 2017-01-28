@@ -24,6 +24,9 @@ const initialConfig = {
     }, {
       test: /\.less$/,
       loader: `style-loader!css?sourceMap&modules&localIdentName=${configurator.cssHash}!less`
+    }, {
+      test: /\.json$/,
+      loader: 'json'
     }]
   }
 };

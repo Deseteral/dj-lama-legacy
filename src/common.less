@@ -1,9 +1,6 @@
-@logo-typeface: 'Lobster', cursive;
+@logo-typeface:     'Lobster', cursive;
 @standard-typeface: 'Raleway', sans-serif;
-@mono-typeface: 'Fira Mono', monospace;
-
-@main-container-padding: 10px;
-@page-title-font-size: 2em;
+@mono-typeface:     'Ubuntu Mono', monospace;
 
 @dark-orange: #dc8f00;
 @orange:      #ffca00;
@@ -12,10 +9,17 @@
 @dark-pink:   #d73373;
 @pink:        #ff67a0;
 @dark-night:  #182026;
-@snow-white:  #ffffff;
-
-@header-height: 64px;
+@snow-white:  #fafafa;
 
 @breakpoint-mobile-m: 375px;
 @breakpoint-mobile-l: 425px;
 @breakpoint-laptop: 1024px;
+
+body {
+  font-family: @standard-typeface;
+}
+
+a {
+  text-decoration: none;
+  color: @pink;
+}

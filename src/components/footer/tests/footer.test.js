@@ -32,7 +32,7 @@ describe('<Footer> component', () => {
 
   it('should render link to changelog', () => {
     findElementByClass('changelog-link').prop('href')
-      .should.eql('/public/CHANGELOG.md');
+      .should.eql('/changelog');
   });
 
   it('should render some info message', () => {

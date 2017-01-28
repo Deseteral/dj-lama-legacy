@@ -2,7 +2,7 @@
 
 ## v2.0.0-beta.4
 - Added changelog link in page footer.
-- Fixed logger printing [Object object] instead of JSON representation.
+- Fixed logger printing `[Object object]` instead of JSON representation of object.
 - Added a little bit more logging information.
 
 ## v2.0.0-beta.3
