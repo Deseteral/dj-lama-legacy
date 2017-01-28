@@ -91,6 +91,10 @@ function loadDatabaseFromStorage(appState) {
       .then((data) => {
         database
           .bootstrap(data)
+          .then((bootstrapStatus) => {
+            logger(TAG, `Imported ${bootstrapStatus.library} songs from storage`);
+            logger(TAG, `Imported ${bootstrapStatus.tags} tags from storage`);
+          })
           .then(() => resolve(appState));
       })
       .catch(reject);

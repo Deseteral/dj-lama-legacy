@@ -17,13 +17,16 @@ export default class Database {
   }
 
   bootstrap(initialData) {
-    const library = initialData.library.map(song => songBuilder(song).build());
-    const tags = initialData.tags;
+    return new Promise((resolve) => {
+      const library = initialData.library.map(song => songBuilder(song).build());
+      const tags = initialData.tags;
 
-    return Promise.all([
-      this.collections.library.insert(library),
-      this.collections.tags.insert(tags)
-    ]);
+      Promise.all([
+        this.collections.library.insert(library),
+        this.collections.tags.insert(tags)
+      ])
+      .then(() => resolve({ library: library.length, tags: tags.length }));
+    });
   }
 
   getCollectionData(collectionName) {
