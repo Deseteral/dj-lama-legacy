@@ -1,7 +1,7 @@
 const path = require('path');
-const configurator = process.env.NODE_ENV === 'production' ?
-  require('./webpack.client.prod.config.js') :
-  require('./webpack.client.dev.config.js');
+const configurator = process.env.NODE_ENV === 'production'
+  ? require('./webpack.client.prod.config.js')
+  : require('./webpack.client.dev.config.js');
 
 const initialConfig = {
   entry: './src/client.jsx',
