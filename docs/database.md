@@ -19,7 +19,8 @@ Documents are stored in collections:
   "time": {
     "start": "0:14",
     "end": "3:23"
-  }
+  },
+  "notWorking": false
 }
 ```
 

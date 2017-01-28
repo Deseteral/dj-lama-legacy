@@ -36,56 +36,45 @@ describe('Database', () => {
 
     return database
       .bootstrap(initialData)
-      .then(database.collections
-        .library
-        .count({})
-        .then(count => count.should.eql(2))
+      .then(() =>
+        database.collections
+          .library
+          .count({})
       )
-      .then(database.collections
-        .tags
-        .count({})
-        .then(count => count.should.eql(2))
+      .then(count => count.should.eql(2))
+      .then(() =>
+        database.collections
+          .tags
+          .count({})
       )
-      .then(database.collections
-        .library
-        .findOne({ _id: '2222' })
-        .then(doc => doc.should.eql({
-          _id: '2222',
-          title: 'second title',
-          artist: 'second artist'
-        }))
+      .then(count => count.should.eql(2))
+      .then(() =>
+        database.collections
+          .library
+          .findOne({ _id: '2222' })
       )
-      .then(database.collections
-        .tags
-        .findOne({ _id: 'aaaa' })
-        .then(doc => doc.should.eql({
-          _id: 'aaaa',
-          name: 'some tag name',
-          songs: ['song-1', 'song-2']
-        }))
-      );
-  });
-
-  it('should get collection data', () =>
-    Promise.resolve(
-      database.collections.library.insert(libraryFixture())
-    )
-    .then(
-      database.collections.tags.insert(tagsFixture())
-    )
-    .then(() => database.getCollectionData('tags'))
-    .then(data =>
-      data.should.eql([{
+      .then(doc => doc.should.eql({
+        _id: '2222',
+        info: {
+          artist: 'second artist',
+          title: 'second title'
+        },
+        ytid: '_uiop',
+        played: 0,
+        time: {},
+        notWorking: false
+      }))
+      .then(() =>
+        database.collections
+          .tags
+          .findOne({ _id: 'aaaa' })
+      )
+      .then(doc => doc.should.eql({
         _id: 'aaaa',
         name: 'some tag name',
         songs: ['song-1', 'song-2']
-      }, {
-        _id: 'bbbb',
-        name: 'a tag name 2',
-        songs: ['1111', '2222']
-      }])
-    )
-  );
+      }));
+  });
 
   it('should create joined data object', () =>
     Promise.resolve(
@@ -99,12 +88,18 @@ describe('Database', () => {
       data.should.eql({
         library: [{
           _id: '1111',
-          title: 'some title',
-          artist: 'some artist'
+          info: {
+            artist: 'some artist',
+            title: 'some title'
+          },
+          ytid: '_qwerty'
         }, {
           _id: '2222',
-          title: 'second title',
-          artist: 'second artist'
+          info: {
+            artist: 'second artist',
+            title: 'second title'
+          },
+          ytid: '_uiop'
         }],
         tags: [{
           _id: 'aaaa',
@@ -123,12 +118,18 @@ describe('Database', () => {
 function libraryFixture() {
   return [{
     _id: '1111',
-    title: 'some title',
-    artist: 'some artist'
+    info: {
+      artist: 'some artist',
+      title: 'some title'
+    },
+    ytid: '_qwerty'
   }, {
     _id: '2222',
-    title: 'second title',
-    artist: 'second artist'
+    info: {
+      artist: 'second artist',
+      title: 'second title'
+    },
+    ytid: '_uiop'
   }];
 }
 
