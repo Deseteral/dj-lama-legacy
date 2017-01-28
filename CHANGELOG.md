@@ -2,6 +2,7 @@
 
 ## v2.0.0-beta.4
 - Fixed logger printing [Object object] instead of JSON representation.
+- Added a little bit more logging information.
 
 ## v2.0.0-beta.3
 - Database library REST API
