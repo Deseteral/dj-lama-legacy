@@ -1,6 +1,7 @@
 # Changelog
 
 ## v2.0.0-beta.4
+- Added changelog link in page footer.
 - Fixed logger printing [Object object] instead of JSON representation.
 - Added a little bit more logging information.
 
@@ -17,4 +18,6 @@
 Initial release of `v2.0.0`. Contains only header and footer with working build and release plans.
 
 ## v1.0.0
-Legacy version.
+Legacy version that could be called a prototype. Served us well for a year.
+
+The last legacy commit is [2ca0639564098161e7e433e62b11155f5c872137](https://github.com/Deseteral/dj-lama/tree/2ca0639564098161e7e433e62b11155f5c872137).

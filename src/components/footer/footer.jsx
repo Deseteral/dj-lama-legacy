@@ -28,6 +28,15 @@ export default function Footer({ appVersion }) {
           </i>
           <div>style guide</div>
         </a>
+        <a
+          className={styles['changelog-link']}
+          href="/public/CHANGELOG.md"
+        >
+          <i className={`${styles['changelog-icon']} material-icons`}>
+            content_paste
+          </i>
+          <div>changelog</div>
+        </a>
       </div>
       <div className={styles['info']}>
         <span>Made with</span>

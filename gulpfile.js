@@ -21,7 +21,7 @@ gulp.task('build-misc', () => gulp
 );
 
 gulp.task('build-public', () => gulp
-  .src(['src/public/**/*', '!src/public/**/*.html'])
+  .src(['src/public/**/*', '!src/public/**/*.html', './CHANGELOG.md'])
   .pipe(gulp.dest('build/src/public'))
 );
 

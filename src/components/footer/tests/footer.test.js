@@ -30,6 +30,11 @@ describe('<Footer> component', () => {
       .should.eql('/style-guide');
   });
 
+  it('should render link to changelog', () => {
+    findElementByClass('changelog-link').prop('href')
+      .should.eql('/public/CHANGELOG.md');
+  });
+
   it('should render some info message', () => {
     findElementByClass('info').text()
       .should.eql('Made withfavoritewhile listening to someaudiotrack.');
