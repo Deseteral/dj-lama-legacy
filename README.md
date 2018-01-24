@@ -1,7 +1,7 @@
 # DJ Lama
 Bot that transforms Discord voice channel into user-driven radio station.
 
-<img src="https://cdn.rawgit.com/Deseteral/dj-lama/master/res/logo.svg" width="30%" height="30%">
+<img src="https://raw.githubusercontent.com/Deseteral/dj-lama-legacy/master/res/logo.svg" width="30%" height="30%">
 
 *Special thanks to my friend Natalia for making this amazing logo!*
 
