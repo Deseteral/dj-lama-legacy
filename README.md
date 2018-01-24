@@ -1,11 +1,15 @@
 # DJ Lama
-A user-driven, YouTube powered radio station.
+Bot that transforms Discord voice channel into user-driven radio station.
 
-[![Build Status](https://travis-ci.org/Deseteral/dj-lama.svg?branch=master)](https://travis-ci.org/Deseteral/dj-lama)
-
-<img src="https://cdn.rawgit.com/Deseteral/dj-lama/master/src/public/resources/logo.svg" width="30%" height="30%">
+<img src="https://cdn.rawgit.com/Deseteral/dj-lama/master/res/logo.svg" width="30%" height="30%">
 
 *Special thanks to my friend Natalia for making this amazing logo!*
+
+**Disclaimer:** This code was written in the *"move fast and break things"*
+fashion, and thus it works well, but the code itself is not the best quality,
+and will be rewritten (possibly using official Discord API). Also it's not
+really suitable for general use, so if you're looking for music bot for Discord
+this is probably not the best choice :wink:.
 
 ## Features
 * **Queuing music** from YouTube.
@@ -13,27 +17,22 @@ A user-driven, YouTube powered radio station.
 * **Song database**, where users can save their most beloved hits.
 * **Web frontend** with queue and list of songs in database.
 
-## Requirements
-* `node v7.2.0+`
-
 ## Building
-First you have to install node modules and build the application:
+First you have to install node modules and download bower components:
 ```
 npm install
-npm run build
+cd src/static && bower install
 ```
 
-To build the app for production set `NODE_ENV` to `production` before running `build` script.
-
-Run the app with:
+and then you can build and run the bot:
+```
+gulp                # build
+node dist/index.js  # run
+```
+or using one command:
 ```
 npm start
 ```
-
-The port on which DJ Lama's server stars can be set using `PORT` environment variable.
-
-## Testing
-Just run `npm t`.
 
 ## License
 This project is licensed under [MIT license](LICENSE).

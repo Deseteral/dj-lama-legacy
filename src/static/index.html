@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+  <title>LamaFM</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+
+  <!-- Libs -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Polymer elements -->
+  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+  <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/paper-card/paper-card.html">
+
+  <!-- Stylesheets -->
+  <link rel="import" href="app-theme.html">
+  <link rel="import" href="index-styles.html">
+
+  <!-- Page script -->
+  <script src="page.js"></script>
+</head>
+<body>
+<template is="dom-bind" id="app">
+  <paper-toolbar>
+    <div class="title">LamaFM</div>
+  </paper-toolbar>
+
+  <paper-tabs selected="{{ selected }}">
+    <paper-tab>STATUS</paper-tab>
+    <paper-tab>KOLEJKA ODTWARZANIA</paper-tab>
+    <paper-tab>LISTA UTWORÓW</paper-tab>
+  </paper-tabs>
+
+  <iron-pages selected="{{ selected }}">
+    <div>
+      <paper-card heading="Status">
+        <div class="card-content">
+          <div>Liczba utworów w kolejce: {{ queue.length }}</div>
+          <div>Liczba utworów w bazie danych: {{ database.length }}</div>
+          <template is="dom-if" if="{{ onAir.status }}">
+            <div class="on-air-container">
+              <div class="on-air">
+                <div class="status">ON AIR</div>
+                <div class="time-panel">
+                  <div>Audycja trwa od:</div>
+                  <div>{{ timeSinceOnAir }}</div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </paper-card>
+    </div>
+    <div>
+      <paper-card heading="Kolejka odtwarzania">
+        <div class="card-content">
+          <table>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Wykonawca</th>
+              <th>Tytuł</th>
+            </tr>
+            <template is="dom-repeat" items="{{ queue }}">
+              <tr>
+                <td>{{ index }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.artist }}</td>
+                <td>{{ item.title }}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </paper-card>
+    </div>
+    <div>
+      <paper-card heading="Lista utworów">
+        <div class="card-content">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Wykonawca</th>
+              <th>Tytuł</th>
+              <th>Ilość odtworzeń</th>
+            </tr>
+            <template is="dom-repeat" items="{{ database }}">
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.artist }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.played }}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </paper-card>
+    </div>
+  </iron-pages>
+</template>
+</body>
+</html>

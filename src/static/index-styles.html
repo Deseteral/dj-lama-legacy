@@ -1,0 +1,88 @@
+<!doctype html>
+<style is="custom-style">
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--primary-background-color);
+
+  margin: 0;
+  height: 100vh;
+}
+
+paper-toolbar {
+  --paper-toolbar-color: white;
+  --paper-toolbar-background: var(--default-primary-color);
+}
+
+paper-tab {
+  background-color: var(--default-primary-color);
+  color: var(--text-primary-color);
+
+  --paper-tab-ink: var(--accent-color);
+}
+
+paper-tabs {
+  margin-bottom: 16px;
+
+  color: var(--accent-color);
+  --paper-tabs-selection-bar-color: var(--accent-color);
+}
+
+iron-pages > div {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+paper-card {
+  max-width: 800px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  height: 56px;
+  font-size: 18px
+}
+
+td {
+  height: 48px;
+}
+
+tr {
+  border-bottom: 1px solid var(--divider-color);
+  border-top: 1px solid var(--divider-color);
+  border-collapse: collapse;
+}
+
+table, th, td {
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.on-air-container {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+.on-air {
+  @apply(--layout-vertical);
+}
+
+.on-air .status {
+  color: var(--paper-red-500);
+  font-size: 64px;
+}
+
+.on-air .time-panel {
+  @apply(--layout-vertical);
+}
+
+.on-air div {
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+</style>
